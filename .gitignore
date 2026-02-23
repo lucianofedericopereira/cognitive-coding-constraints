@@ -191,8 +191,12 @@ results/exp2_raw_responses.csv
 # Generated figures
 results/plots/
 
-# Rendered paper PDF (regenerate with make paper)
+# Rendered paper outputs (regenerate with make paper / make paper-html)
 paper/empirical_cdcc_paper.pdf
+paper/empirical_cdcc_paper.html
+
+# Mermaid-filter generated PNGs (regenerated automatically during make paper)
+paper/figures/
 
 # HuggingFace model cache (can be tens of GB)
 ~/.cache/huggingface/

@@ -64,10 +64,16 @@ plots: exp1 exp2 exp3
 # ---------------------------------------------------------------------------
 # Paper rendering (requires a LaTeX installation or pandoc)
 # ---------------------------------------------------------------------------
+# Mermaid filter converts ```mermaid blocks → PNG via mmdc (Mermaid CLI).
+# Install mmdc once: npm install -g @mermaid-js/mermaid-cli
+# If mmdc is absent the filter falls back gracefully to a plain code block.
+MERMAID_FILTER := paper/mermaid-filter.lua
+
 paper:
 	@echo "==> Rendering paper (requires pandoc + texlive-xetex) …"
-	@echo "    Mermaid diagrams render as code blocks in PDF; view on GitHub for graphical version."
+	@echo "    Mermaid → PNG via mmdc if available (npm i -g @mermaid-js/mermaid-cli)"
 	pandoc paper/empirical_cdcc_paper.md \
+	    --lua-filter=$(MERMAID_FILTER) \
 	    --pdf-engine=xelatex \
 	    --variable geometry:margin=2.5cm \
 	    --variable fontsize=11pt \
@@ -78,6 +84,7 @@ paper:
 paper-html:
 	@echo "==> Rendering paper as HTML (no LaTeX required) …"
 	pandoc paper/empirical_cdcc_paper.md \
+	    --lua-filter=$(MERMAID_FILTER) \
 	    --standalone \
 	    -o paper/empirical_cdcc_paper.html
 	@echo "Paper written to paper/empirical_cdcc_paper.html"
@@ -100,6 +107,7 @@ clean:
 	rm -f $(RESULTS)/exp2_comprehension_scores.csv
 	rm -f $(RESULTS)/exp3_rank_correlations.csv
 	rm -rf $(PLOTS)
+	rm -rf paper/figures paper/empirical_cdcc_paper.pdf paper/empirical_cdcc_paper.html
 	find . -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
 
 help:
