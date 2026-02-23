@@ -1,3 +1,12 @@
+# -----------------------------------------------------------------------------
+# Author:  Luciano Federico Pereira
+# ORCID:   https://orcid.org/0009-0002-4591-6568
+# Paper:   Empirical Validation of Cognitive-Derived Coding Constraints and
+#          Tokenization Asymmetries in LLM-Assisted Software Engineering
+# Repo:    https://github.com/lucianofedericopereira/cognitive-coding-constraints
+# License: LGPL-2.1
+# -----------------------------------------------------------------------------
+
 """
 ascii_to_dirtree.py — Convert an ASCII directory tree to LaTeX dirtree syntax.
 
