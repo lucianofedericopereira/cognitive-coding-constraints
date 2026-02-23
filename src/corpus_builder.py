@@ -43,7 +43,10 @@ EXTENDED_IDENTIFIERS = [
     ("order subscription cancelled", "order_management"),
     ("order backordered", "order_management"),
     ("order hold placed", "order_management"),
-    # payment (20)
+    ("order hold released", "order_management"),
+    ("order flagged for review", "order_management"),
+    ("order tax exemption applied", "order_management"),
+    # payment (20 → 23)
     ("payment disputed", "payment"),
     ("payment dispute resolved", "payment"),
     ("payment authorization requested", "payment"),
@@ -64,6 +67,9 @@ EXTENDED_IDENTIFIERS = [
     ("payment tax withheld", "payment"),
     ("payment batch submitted", "payment"),
     ("payment batch settled", "payment"),
+    ("payment link created", "payment"),
+    ("payment link expired", "payment"),
+    ("payment link used", "payment"),
     # inventory (20)
     ("inventory threshold breached", "inventory"),
     ("inventory snapshot taken", "inventory"),
@@ -85,6 +91,9 @@ EXTENDED_IDENTIFIERS = [
     ("inventory cycle count completed", "inventory"),
     ("inventory write off recorded", "inventory"),
     ("inventory forecast updated", "inventory"),
+    ("inventory bin reassigned", "inventory"),
+    ("inventory shrinkage recorded", "inventory"),
+    ("inventory return processed", "inventory"),
     # user_auth (20)
     ("user email verified", "user_auth"),
     ("user two factor enabled", "user_auth"),
@@ -106,6 +115,9 @@ EXTENDED_IDENTIFIERS = [
     ("user consent withdrawn", "user_auth"),
     ("user api key created", "user_auth"),
     ("user api key revoked", "user_auth"),
+    ("user avatar updated", "user_auth"),
+    ("user language preference set", "user_auth"),
+    ("user timezone updated", "user_auth"),
     # notification (20)
     ("notification scheduled", "notification"),
     ("notification cancelled", "notification"),
@@ -127,6 +139,9 @@ EXTENDED_IDENTIFIERS = [
     ("notification suppressed", "notification"),
     ("notification opted in", "notification"),
     ("notification opted out", "notification"),
+    ("notification webhook triggered", "notification"),
+    ("notification sms delivered", "notification"),
+    ("notification push delivered", "notification"),
     # shipping (20)
     ("shipment label generated", "shipping"),
     ("shipment pickup scheduled", "shipping"),
@@ -148,6 +163,8 @@ EXTENDED_IDENTIFIERS = [
     ("shipment return received", "shipping"),
     ("shipment consolidation completed", "shipping"),
     ("shipment route optimized", "shipping"),
+    ("shipment signature collected", "shipping"),
+    ("shipment proof of delivery uploaded", "shipping"),
     # analytics (20)
     ("analytics goal completed", "analytics"),
     ("analytics dashboard created", "analytics"),
@@ -169,6 +186,9 @@ EXTENDED_IDENTIFIERS = [
     ("analytics session recorded", "analytics"),
     ("analytics heatmap generated", "analytics"),
     ("analytics tag fired", "analytics"),
+    ("analytics conversion recorded", "analytics"),
+    ("analytics experiment assigned", "analytics"),
+    ("analytics metric threshold exceeded", "analytics"),
 ]
 
 # ---------------------------------------------------------------------------

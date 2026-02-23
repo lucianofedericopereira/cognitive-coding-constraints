@@ -204,11 +204,17 @@ def fig5_correlation_heatmap(corr_df: pd.DataFrame) -> None:
 # ---------------------------------------------------------------------------
 
 def run() -> None:
-    exp1 = pd.read_csv(EXP1_RESULTS) if EXP1_RESULTS.exists() and EXP1_RESULTS.stat().st_size > 50 else None
-    exp2 = pd.read_csv(EXP2_RESULTS) if EXP2_RESULTS.exists() and EXP2_RESULTS.stat().st_size > 50 else None
-    exp3 = pd.read_csv(EXP3_RESULTS) if EXP3_RESULTS.exists() and EXP3_RESULTS.stat().st_size > 50 else None
-    metrics = DATA_DIR / "code_metrics.csv"
-    metrics_df = pd.read_csv(metrics) if metrics.exists() and metrics.stat().st_size > 50 else None
+    def _load(path):
+        if path.exists():
+            df = pd.read_csv(path)
+            return df if len(df) > 0 else None
+        return None
+
+    exp1 = _load(EXP1_RESULTS)
+    exp2 = _load(EXP2_RESULTS)
+    exp3 = _load(EXP3_RESULTS)
+    metrics_path = DATA_DIR / "code_metrics.csv"
+    metrics_df = _load(metrics_path)
 
     if exp1 is not None:
         fig1_token_distributions(exp1)
@@ -222,7 +228,7 @@ def run() -> None:
     else:
         log.warning("Exp2 results or metrics not available — skipping fig3, fig4.")
 
-    if exp3 is not None and not exp3.empty:
+    if exp3 is not None:
         fig5_correlation_heatmap(exp3)
     else:
         log.warning("Exp3 results not available — skipping fig5.")
