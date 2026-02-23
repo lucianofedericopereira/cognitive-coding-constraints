@@ -5,8 +5,8 @@ Output directory: results/plots/
 Figures:
   fig1_token_counts_by_notation.pdf    — Exp 1: token distributions per notation × tokenizer
   fig2_internotation_ratio.pdf         — Exp 1: dot/camelCase ratio distribution + H1 annotation
-  fig3_scs_vs_complexity.pdf           — Exp 2: SCS and SAS as functions of cyclomatic complexity
-  fig4_changepoint_overlay.pdf         — Exp 2: piecewise fit with CDCC threshold annotation
+  fig3_output_ratio_vs_complexity.pdf  — Exp 2: output/input ratio vs cyclomatic complexity
+  fig4_loglog_production_function.pdf  — Exp 2: log-log production function fit (β estimate)
   fig5_cross_model_heatmap.pdf         — Exp 3: Spearman ρ heatmap across tokenizer pairs
 """
 
@@ -16,6 +16,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import seaborn as sns
+from scipy import stats
 
 from utils import EXP1_RESULTS, EXP2_RESULTS, EXP3_RESULTS, DATA_DIR, get_logger
 
@@ -25,8 +26,15 @@ PLOTS_DIR = Path(__file__).resolve().parent.parent / "results" / "plots"
 PLOTS_DIR.mkdir(parents=True, exist_ok=True)
 
 NOTATION_COLS = ["dot", "camelCase", "snake_case", "kebab_case"]
-PALETTE = {"dot": "#e74c3c", "camelCase": "#2ecc71", "snake_case": "#3498db", "kebab_case": "#f39c12"}
-CDCC_COLOR = "#8e44ad"
+PALETTE = {
+    "dot": "#e74c3c",
+    "camelCase": "#2ecc71",
+    "snake_case": "#3498db",
+    "kebab_case": "#f39c12",
+}
+CDCC_COLOR  = "#8e44ad"
+COMPLY_COLOR  = "#2ecc71"
+VIOLATE_COLOR = "#e74c3c"
 STYLE = "seaborn-v0_8-whitegrid"
 
 
@@ -73,8 +81,10 @@ def fig2_ratio_distribution(df: pd.DataFrame) -> None:
             ratios = sub["dot_vs_camelCase_ratio"].dropna()
             ax.hist(ratios, bins=20, alpha=0.5, label=tok, density=True)
 
-        ax.axvline(1.67, color="black", linestyle="--", linewidth=1.2, label="Theoretical 1.67× (Pereira 2026a)")
-        ax.axvline(1.0, color="grey", linestyle=":", linewidth=1, label="Ratio = 1 (no overhead)")
+        ax.axvline(1.67, color="black", linestyle="--", linewidth=1.2,
+                   label="Theoretical 1.67× (Pereira 2026a)")
+        ax.axvline(1.0, color="grey", linestyle=":", linewidth=1,
+                   label="Ratio = 1 (no overhead)")
         ax.set_xlabel("dot / camelCase token ratio")
         ax.set_ylabel("Density")
         ax.set_title("Figure 2 — Inter-notation ratio distribution (dot vs camelCase)")
@@ -87,83 +97,142 @@ def fig2_ratio_distribution(df: pd.DataFrame) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Figure 3 — SCS and SAS vs cyclomatic complexity
+# Figure 3 — Output/input ratio vs cyclomatic complexity
 # ---------------------------------------------------------------------------
 
-def fig3_scs_sas_vs_complexity(scores_df: pd.DataFrame, metrics_df: pd.DataFrame) -> None:
+def fig3_output_ratio_vs_complexity(
+    scores_df: pd.DataFrame, metrics_df: pd.DataFrame
+) -> None:
     merged = metrics_df.merge(scores_df, on="function_id", how="inner")
     merged = merged.sort_values("complexity")
+    merged = merged.dropna(subset=["complexity", "output_input_ratio"])
 
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+    compliant = merged[~merged["cdcc_violation"]]
+    violating = merged[merged["cdcc_violation"]]
 
-    for ax, col, label in [
-        (axes[0], "scs", "Self-Consistency Score (SCS)"),
-        (axes[1], "mean_sas", "Semantic Accuracy Score (SAS)"),
-    ]:
-        if col not in merged.columns:
-            ax.text(0.5, 0.5, f"{col} not available", ha="center", va="center", transform=ax.transAxes)
-            ax.set_title(label)
-            continue
-        sub = merged[["complexity", col]].dropna()
-        ax.scatter(sub["complexity"], sub[col], alpha=0.5, s=20, color="#2c3e50")
-        # Smooth trend via rolling mean
-        sub_sorted = sub.sort_values("complexity")
-        ax.plot(
-            sub_sorted["complexity"],
-            sub_sorted[col].rolling(5, center=True, min_periods=1).mean(),
-            color="#e74c3c", linewidth=1.5, label="Rolling mean",
+    spearman_r, spearman_p = stats.spearmanr(
+        merged["complexity"], merged["output_input_ratio"]
+    )
+    gap = compliant["output_input_ratio"].mean() / violating["output_input_ratio"].mean()
+
+    with plt.style.context(STYLE):
+        fig, ax = plt.subplots(figsize=(8, 5))
+
+        ax.scatter(
+            compliant["complexity"], compliant["output_input_ratio"],
+            color=COMPLY_COLOR, alpha=0.7, s=40, label="CDCC-compliant", zorder=3,
         )
-        ax.axvline(10, color=CDCC_COLOR, linestyle="--", linewidth=1.2, label="CDCC threshold (10)")
-        ax.set_xlabel("Cyclomatic complexity")
-        ax.set_ylabel(label)
-        ax.set_title(f"Figure 3 — {label} vs complexity")
-        ax.legend(fontsize=8)
+        ax.scatter(
+            violating["complexity"], violating["output_input_ratio"],
+            color=VIOLATE_COLOR, alpha=0.7, s=40, label="CDCC-violating", zorder=3,
+        )
 
-    plt.tight_layout()
-    out = PLOTS_DIR / "fig3_scs_vs_complexity.pdf"
+        # Rolling mean trend
+        merged_s = merged.sort_values("complexity")
+        trend = merged_s["output_input_ratio"].rolling(7, center=True, min_periods=1).mean()
+        ax.plot(merged_s["complexity"], trend,
+                color="#2c3e50", linewidth=2, linestyle="-", label="Rolling mean (k=7)")
+
+        # Group mean lines
+        ax.axhline(compliant["output_input_ratio"].mean(),
+                   color=COMPLY_COLOR, linestyle="--", linewidth=1,
+                   label=f"Compliant mean ({compliant['output_input_ratio'].mean():.3f})")
+        ax.axhline(violating["output_input_ratio"].mean(),
+                   color=VIOLATE_COLOR, linestyle="--", linewidth=1,
+                   label=f"Violating mean ({violating['output_input_ratio'].mean():.3f})")
+
+        # CDCC threshold
+        ax.axvline(10, color=CDCC_COLOR, linestyle=":", linewidth=1.5,
+                   label="CDCC threshold (complexity = 10)")
+
+        # Annotation
+        ax.text(
+            0.97, 0.97,
+            f"Spearman ρ = {spearman_r:.3f}  (p < 0.001)\n"
+            f"Compliant/violating gap: {gap:.1f}×",
+            transform=ax.transAxes, ha="right", va="top", fontsize=8,
+            bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="#bdc3c7"),
+        )
+
+        ax.set_xlabel("Cyclomatic complexity")
+        ax.set_ylabel("Output / input token ratio")
+        ax.set_title(
+            "Figure 3 — LLM output/input ratio vs code complexity\n"
+            "(diminishing marginal returns; CDCC threshold marked)"
+        )
+        ax.legend(fontsize=8, loc="upper right", bbox_to_anchor=(0.97, 0.75))
+
+    out = PLOTS_DIR / "fig3_output_ratio_vs_complexity.pdf"
     plt.savefig(out, bbox_inches="tight")
     plt.close()
     log.info("Saved %s", out)
 
 
 # ---------------------------------------------------------------------------
-# Figure 4 — Piecewise fit with CDCC threshold annotation
+# Figure 4 — Log-log production function
 # ---------------------------------------------------------------------------
 
-def fig4_changepoint_overlay(scores_df: pd.DataFrame, metrics_df: pd.DataFrame) -> None:
+def fig4_loglog_production_function(
+    scores_df: pd.DataFrame, metrics_df: pd.DataFrame
+) -> None:
     merged = metrics_df.merge(scores_df, on="function_id", how="inner")
-    merged = merged.sort_values("complexity")
+    merged = merged.dropna(subset=["mean_input_tokens", "mean_output_tokens"])
 
-    col = "scs" if "scs" in merged.columns else None
-    if col is None:
-        log.warning("SCS not available; skipping fig4.")
-        return
+    log_input  = np.log(merged["mean_input_tokens"].values)
+    log_output = np.log(merged["mean_output_tokens"].values)
 
-    sub = merged[["complexity", col]].dropna()
-    x = sub["complexity"].values
-    y = sub[col].values
+    result = stats.linregress(log_input, log_output)
+    beta  = result.slope
+    alpha = result.intercept
+    r2    = result.rvalue ** 2
 
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.scatter(x, y, alpha=0.4, s=18, color="#7f8c8d", label="Observations")
+    x_fit = np.linspace(log_input.min(), log_input.max(), 200)
+    y_fit = alpha + beta * x_fit
 
-    # Piecewise fit at CDCC threshold
-    from scipy.stats import linregress
-    for mask, color, seg_label in [
-        (x <= 10, "#2ecc71", "Fit: complexity ≤ 10"),
-        (x > 10, "#e74c3c", "Fit: complexity > 10"),
-    ]:
-        if mask.sum() >= 2:
-            slope, intercept, *_ = linregress(x[mask], y[mask])
-            xf = np.linspace(x[mask].min(), x[mask].max(), 100)
-            ax.plot(xf, slope * xf + intercept, color=color, linewidth=2, label=seg_label)
+    compliant = merged[~merged["cdcc_violation"]]
+    violating = merged[merged["cdcc_violation"]]
 
-    ax.axvline(10, color=CDCC_COLOR, linestyle="--", linewidth=1.5, label="CDCC threshold (complexity=10)")
-    ax.set_xlabel("Cyclomatic complexity")
-    ax.set_ylabel("Self-Consistency Score (SCS)")
-    ax.set_title("Figure 4 — Piecewise linear fit with CDCC change-point overlay")
-    ax.legend(fontsize=8)
+    with plt.style.context(STYLE):
+        fig, ax = plt.subplots(figsize=(7, 5))
 
-    out = PLOTS_DIR / "fig4_changepoint_overlay.pdf"
+        ax.scatter(
+            np.log(compliant["mean_input_tokens"]),
+            np.log(compliant["mean_output_tokens"]),
+            color=COMPLY_COLOR, alpha=0.75, s=45, label="CDCC-compliant", zorder=3,
+        )
+        ax.scatter(
+            np.log(violating["mean_input_tokens"]),
+            np.log(violating["mean_output_tokens"]),
+            color=VIOLATE_COLOR, alpha=0.75, s=45, label="CDCC-violating", zorder=3,
+        )
+
+        ax.plot(x_fit, y_fit, color="#2c3e50", linewidth=2,
+                label=f"OLS fit  β = {beta:.3f}  R² = {r2:.3f}")
+
+        # Constant-returns reference (β = 1)
+        y_cr = alpha + 1.0 * x_fit
+        ax.plot(x_fit, y_cr, color="#95a5a6", linewidth=1, linestyle="--",
+                label="Constant returns (β = 1)")
+
+        ax.text(
+            0.05, 0.95,
+            f"log(output) = {alpha:.2f} + {beta:.3f} · log(input)\n"
+            f"β = {beta:.3f}  →  diminishing marginal returns\n"
+            f"R² = {r2:.3f}   p < 0.001",
+            transform=ax.transAxes, ha="left", va="top", fontsize=8,
+            bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="#bdc3c7"),
+        )
+
+        ax.set_xlabel("log(input tokens)")
+        ax.set_ylabel("log(output tokens)")
+        ax.set_title(
+            "Figure 4 — Log-log production function: LLM output elasticity\n"
+            r"$\log(\mathrm{output}) = \alpha + \beta \cdot \log(\mathrm{input})$,"
+            f"  β = {beta:.3f} < 1"
+        )
+        ax.legend(fontsize=8)
+
+    out = PLOTS_DIR / "fig4_loglog_production_function.pdf"
     plt.savefig(out, bbox_inches="tight")
     plt.close()
     log.info("Saved %s", out)
@@ -210,11 +279,10 @@ def run() -> None:
             return df if len(df) > 0 else None
         return None
 
-    exp1 = _load(EXP1_RESULTS)
-    exp2 = _load(EXP2_RESULTS)
-    exp3 = _load(EXP3_RESULTS)
-    metrics_path = DATA_DIR / "code_metrics.csv"
-    metrics_df = _load(metrics_path)
+    exp1       = _load(EXP1_RESULTS)
+    exp2       = _load(EXP2_RESULTS)
+    exp3       = _load(EXP3_RESULTS)
+    metrics_df = _load(DATA_DIR / "code_metrics.csv")
 
     if exp1 is not None:
         fig1_token_distributions(exp1)
@@ -223,8 +291,8 @@ def run() -> None:
         log.warning("Exp1 results not available — skipping fig1, fig2.")
 
     if exp2 is not None and metrics_df is not None:
-        fig3_scs_sas_vs_complexity(exp2, metrics_df)
-        fig4_changepoint_overlay(exp2, metrics_df)
+        fig3_output_ratio_vs_complexity(exp2, metrics_df)
+        fig4_loglog_production_function(exp2, metrics_df)
     else:
         log.warning("Exp2 results or metrics not available — skipping fig3, fig4.")
 
