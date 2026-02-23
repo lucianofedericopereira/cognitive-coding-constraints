@@ -1,0 +1,40 @@
+# Core data
+pandas==2.2.2
+numpy==1.26.4
+
+# Tokenizers — Experiment 1
+tiktoken==0.7.0
+transformers==4.41.2
+sentencepiece==0.2.0   # required by some HF tokenizers
+protobuf==4.25.3       # required by sentencepiece
+
+# Code metrics — Experiment 2
+radon==6.0.1
+
+# LLM APIs — Experiment 2
+openai==1.30.1
+anthropic==0.28.0
+
+# Embeddings & scoring — Experiment 2
+sentence-transformers==3.0.1
+scikit-learn==1.5.0
+
+# Inter-rater agreement
+krippendorff==0.6.1
+
+# Change-point detection — Experiment 2
+ruptures==1.1.9
+statsmodels==0.14.2
+scipy==1.13.1
+
+# Visualization (notebooks)
+matplotlib==3.9.0
+seaborn==0.13.2
+
+# Notebook support
+jupyterlab==4.2.2
+ipykernel==6.29.4
+
+# Utilities
+tqdm==4.66.4
+python-dotenv==1.0.1

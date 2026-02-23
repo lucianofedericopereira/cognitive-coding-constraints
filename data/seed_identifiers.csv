@@ -1,0 +1,41 @@
+id,semantic_form,domain
+1,order created,order_management
+2,order updated,order_management
+3,order cancelled,order_management
+4,order shipped,order_management
+5,order delivered,order_management
+6,order item added,order_management
+7,order item removed,order_management
+8,payment initiated,payment
+9,payment completed,payment
+10,payment failed,payment
+11,payment refund initiated,payment
+12,payment refund completed,payment
+13,payment method added,payment
+14,payment method removed,payment
+15,inventory updated,inventory
+16,inventory item added,inventory
+17,inventory item removed,inventory
+18,inventory low stock alert,inventory
+19,inventory reorder triggered,inventory
+20,inventory reconciliation completed,inventory
+21,user registered,user_auth
+22,user login succeeded,user_auth
+23,user login failed,user_auth
+24,user password reset requested,user_auth
+25,user password reset completed,user_auth
+26,user account deactivated,user_auth
+27,user role assigned,user_auth
+28,notification sent,notification
+29,notification delivery failed,notification
+30,notification read,notification
+31,notification preference updated,notification
+32,shipment created,shipping
+33,shipment tracking updated,shipping
+34,shipment exception raised,shipping
+35,shipment returned,shipping
+36,analytics event tracked,analytics
+37,analytics report generated,analytics
+38,analytics funnel step completed,analytics
+39,analytics segment updated,analytics
+40,analytics export completed,analytics
