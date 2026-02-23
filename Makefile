@@ -68,12 +68,14 @@ plots: exp1 exp2 exp3
 # Install mmdc once: npm install -g @mermaid-js/mermaid-cli
 # If mmdc is absent the filter falls back gracefully to a plain code block.
 MERMAID_FILTER := paper/mermaid-filter.lua
+LATEX_HEADER   := paper/header.tex
 
 paper:
 	@echo "==> Rendering paper (requires pandoc + texlive-xetex) …"
 	@echo "    Mermaid → PNG via mmdc if available (npm i -g @mermaid-js/mermaid-cli)"
 	pandoc paper/empirical_cdcc_paper.md \
 	    --lua-filter=$(MERMAID_FILTER) \
+	    --include-in-header=$(LATEX_HEADER) \
 	    --pdf-engine=xelatex \
 	    --variable geometry:margin=2.5cm \
 	    --variable fontsize=11pt \
