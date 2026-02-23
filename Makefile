@@ -7,7 +7,7 @@ SRCDIR  := src
 RESULTS := results
 PLOTS   := results/plots
 
-.PHONY: all corpus exp1 exp2 exp3 plots paper clean help
+.PHONY: all corpus exp1 exp2 exp3 plots paper paper-html clean help
 
 # ---------------------------------------------------------------------------
 # Default
@@ -65,11 +65,22 @@ plots: exp1 exp2 exp3
 # Paper rendering (requires a LaTeX installation or pandoc)
 # ---------------------------------------------------------------------------
 paper:
-	@echo "==> Rendering paper …"
+	@echo "==> Rendering paper (requires pandoc + texlive-xetex) …"
+	@echo "    Mermaid diagrams render as code blocks in PDF; view on GitHub for graphical version."
 	pandoc paper/empirical_cdcc_paper.md \
 	    --pdf-engine=xelatex \
+	    --variable geometry:margin=2.5cm \
+	    --variable fontsize=11pt \
+	    --toc \
 	    -o paper/empirical_cdcc_paper.pdf
 	@echo "Paper written to paper/empirical_cdcc_paper.pdf"
+
+paper-html:
+	@echo "==> Rendering paper as HTML (no LaTeX required) …"
+	pandoc paper/empirical_cdcc_paper.md \
+	    --standalone \
+	    -o paper/empirical_cdcc_paper.html
+	@echo "Paper written to paper/empirical_cdcc_paper.html"
 
 # ---------------------------------------------------------------------------
 # Tests
@@ -98,6 +109,7 @@ help:
 	@echo "  exp2    — code metrics + LLM probe + scoring + change-point"
 	@echo "  exp3    — cross-model rank correlations"
 	@echo "  plots   — generate all paper figures"
-	@echo "  paper   — render PDF via pandoc/LaTeX"
+	@echo "  paper      — render PDF via pandoc + xelatex (texlive-xetex)"
+	@echo "  paper-html — render HTML via pandoc (no LaTeX needed)"
 	@echo "  test    — run unit tests"
 	@echo "  clean   — remove generated files (preserves API cache)"
