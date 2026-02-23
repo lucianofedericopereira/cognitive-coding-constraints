@@ -12,7 +12,7 @@
 
 ## Abstract
 
-Two prior theoretical works proposed, respectively, that (1) dot-notation naming conventions in Event-Driven Architectures produce measurable tokenization overhead for transformer-based LLMs (Pereira, 2026a), and (2) that cognitive-science-grounded structural limits for code artifacts may simultaneously reduce cognitive load for human developers and contextual degradation for LLM co-developers (Pereira, 2026b). Both claims were articulated as testable hypotheses but lacked empirical grounding. This paper closes that gap. We present a reproducible experimental framework — implemented in Python and executed against the OpenAI `tiktoken` library and the Hugging Face tokenizer ecosystem — that empirically measures: (i) token count differentials across naming conventions (dot notation, camelCase, snake_case, kebab-case) applied to a controlled corpus of enterprise event identifiers; (ii) the relationship between CDCC structural thresholds (cyclomatic complexity, lines of code, function count) and measurable LLM behavioral proxies (prompt token consumption, response coherence degradation under truncation); and (iii) cross-model tokenizer variance across GPT-4o, Claude 3.x, and Llama 3 vocabularies. Results confirm the theoretical projections in 2026a and provide partial empirical support for the CDCC convergence hypothesis from 2026b.
+Two prior theoretical works proposed, respectively, that (1) dot-notation naming conventions in Event-Driven Architectures produce measurable tokenization overhead for transformer-based LLMs (Pereira, 2026a), and (2) that cognitive-science-grounded structural limits for code artifacts may simultaneously reduce cognitive load for human developers and contextual degradation for LLM co-developers (Pereira, 2026b). Both claims were articulated as testable hypotheses but lacked empirical grounding. This paper closes that gap. We present a reproducible experimental framework — implemented in Python and executed against the OpenAI `tiktoken` library and the Hugging Face tokenizer ecosystem — that empirically measures: (i) token count differentials across naming conventions (dot notation, camelCase, snake_case, kebab-case) applied to a controlled corpus of enterprise event identifiers; (ii) the relationship between CDCC structural thresholds (cyclomatic complexity, lines of code, nesting depth) and LLM comprehension quality (self-consistency and semantic accuracy) on a corpus of 100 Python functions probed via a local Llama 3.2 model (Ollama); and (iii) cross-model tokenizer variance across GPT-4o (`o200k_base`), GPT-4 (`cl100k_base`), and a Claude-proxy approximation. Hugging Face tokenizers (Llama 3, Mistral) are supported as optional extensions. Results confirm the theoretical projections in 2026a and provide partial empirical support for the CDCC convergence hypothesis from 2026b.
 
 **Keywords:** tokenization, BPE, naming conventions, cognitive load, CDCC, LLM, empirical software engineering, code metrics, context window, event-driven architecture
 
@@ -83,11 +83,11 @@ A corpus of **N = 200** enterprise event identifiers is constructed using the fo
 |---|---|---|
 | GPT-4o | `o200k_base` | `tiktoken` |
 | GPT-3.5 / GPT-4 | `cl100k_base` | `tiktoken` |
-| Llama 3 | `meta-llama/Meta-Llama-3-8B` | `transformers` (Hugging Face) |
-| Mistral | `mistralai/Mistral-7B-v0.1` | `transformers` |
+| Llama 3 *(optional)* | `meta-llama/Meta-Llama-3-8B` | `transformers` (Hugging Face) |
+| Mistral *(optional)* | `mistralai/Mistral-7B-v0.1` | `transformers` |
 | Claude proxy | `cl100k_base` (closest public approximation) | `tiktoken` |
 
-> **Note:** Anthropic does not publish Claude's tokenizer. `cl100k_base` is used as a documented approximation; variance between this proxy and actual Claude tokenization is acknowledged as a study limitation.
+> **Note:** Anthropic does not publish Claude's tokenizer. `cl100k_base` is used as a documented approximation; variance between this proxy and actual Claude tokenization is acknowledged as a study limitation. Hugging Face tokenizers (Llama 3, Mistral) require local model downloads (~4–8 GB each) and are skipped gracefully if not installed; primary results use tiktoken-based encodings (GPT-4o, GPT-4, Claude proxy).
 
 #### 3.1.3 Metrics
 
