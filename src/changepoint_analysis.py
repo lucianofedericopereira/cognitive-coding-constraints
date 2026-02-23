@@ -123,17 +123,20 @@ def run() -> dict:
         x = sub["complexity"].values.astype(float)
         y = sub[outcome].values.astype(float)
 
-        cps = detect_changepoints(y, n_bkps=2)
-        alignment = test_threshold_alignment(cps)
+        # detect_changepoints returns 1-indexed end-of-segment positions;
+        # map each breakpoint index back to its corresponding complexity value
+        cp_indices = detect_changepoints(y, n_bkps=2)
+        cp_values = [int(x[min(cp - 1, len(x) - 1)]) for cp in cp_indices]
+        alignment = test_threshold_alignment(cp_values)
         pwl = piecewise_linear_fit(x, y, CDCC_THRESHOLD_COMPLEXITY)
 
         log.info(
-            "\n[%s]\n  Detected change-points : %s\n"
+            "\n[%s]\n  Detected change-points : %s (complexity values)\n"
             "  CDCC aligned (tol=%d)  : %s\n"
             "  Slope below cp=10      : %.4f (p=%.4f)\n"
             "  Slope above cp=10      : %.4f (p=%.4f)",
             outcome,
-            cps, ALIGNMENT_TOLERANCE, alignment["aligned"],
+            cp_values, ALIGNMENT_TOLERANCE, alignment["aligned"],
             pwl["slope_below"] or 0, pwl["p_below"] or 1,
             pwl["slope_above"] or 0, pwl["p_above"] or 1,
         )
