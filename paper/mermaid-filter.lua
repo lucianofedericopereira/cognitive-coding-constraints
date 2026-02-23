@@ -71,18 +71,20 @@ local function mermaid_to_forest(src)
   if not root then return nil end
 
   -- ── Step 4: recursive forest-tree builder ────────────────
+  -- Labels are wrapped in {} so commas/colons inside text are not
+  -- parsed as TikZ/forest option separators.
   local function build(id, depth)
     local label = latex_escape(labels[id] or id)
     local indent = string.rep("  ", depth)
     if children[id] and #children[id] > 0 then
-      local parts = { indent .. "[" .. label }
+      local parts = { indent .. "[{" .. label .. "}" }
       for _, child_id in ipairs(children[id]) do
         table.insert(parts, build(child_id, depth + 1))
       end
       table.insert(parts, indent .. "]")
       return table.concat(parts, "\n")
     else
-      return indent .. "[" .. label .. "]"
+      return indent .. "[{" .. label .. "}]"
     end
   end
 
