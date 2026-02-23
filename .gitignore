@@ -188,12 +188,20 @@ results/exp2_raw_responses.csv
 # results/exp2_comprehension_scores.csv
 # results/exp3_rank_correlations.csv
 
-# Generated figures
-results/plots/
+# Generated figures — committed for reproducibility (pre-computed)
+# results/plots/
 
-# Rendered paper outputs (regenerate with make paper / make paper-html)
-paper/empirical_cdcc_paper.pdf
+# Rendered paper outputs — PDF committed to repo for readers
+# paper/empirical_cdcc_paper.pdf
 paper/empirical_cdcc_paper.html
+
+# LaTeX build artifacts
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.toc
 
 # Mermaid-filter generated PNGs (regenerated automatically during make paper)
 paper/figures/

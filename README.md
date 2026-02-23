@@ -101,6 +101,11 @@ paper/
   references.bib             # BibTeX bibliography
   empirical_cdcc_paper.pdf   # Compiled paper
 
+notebooks/
+  01_tokenization_results.ipynb  # Experiment 1 — token counts and cost model
+  02_cdcc_comprehension.ipynb    # Experiment 2 — production function analysis
+  03_cross_model_variance.ipynb  # Experiment 3 — cross-model rank correlations
+
 tests/
   test_corpus_builder.py
   test_cost_model.py
