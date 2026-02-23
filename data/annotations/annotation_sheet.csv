@@ -1,0 +1,1740 @@
+function_id,attempt,response_text,sas_score,function_code_preview
+tier1_001_update,1.0,This function updates the screen by replacing or updating the rendered content and style of a console output.,,"# Source : https://github.com/Textualize/rich/blob/master/rich/console.py (line 420)
+# License: MIT
+# Complexity: 4
+# Tier   : tier1
+
+def update(
+    self, *renderables: RenderableType, style: Optional[StyleType] = None
+) -> None:
+    """"""Update the screen.
+
+    Args:
+        renderable (RenderableType, optional): Optional renderable to replace current renderable,
+            or None for no change. Defaults to None.
+        style: (Style, optional): Replacement style, or None for no change. Defaults to None.
+    """"""
+    if renderables:
+        self.screen.renderable = (
+            Group(*rende"
+tier1_002_initialize,1.0,This function initializes the IOLoop by setting it as the current event loop if the `make_current` parameter is set to `True`.,,"# Source : https://github.com/tornadoweb/tornado/blob/master/tornado/ioloop.py (line 361)
+# License: Apache-2.0
+# Complexity: 2
+# Tier   : tier1
+
+def initialize(self, make_current: bool = True) -> None:
+    if make_current:
+        self._make_current()"
+tier1_003_headers,1.0,"This function sets the default headers for an HTTP request, including Accept, Accept-Encoding, Connection, and User-Agent, and then updates these headers with any additional ones provided in the `headers` parameter.",,"# Source : https://github.com/encode/httpx/blob/master/httpx/_client.py (line 306)
+# License: BSD-3
+# Complexity: 1
+# Tier   : tier1
+
+def headers(self, headers: HeaderTypes) -> None:
+    client_headers = Headers(
+        {
+            b""Accept"": b""*/*"",
+            b""Accept-Encoding"": ACCEPT_ENCODING.encode(""ascii""),
+            b""Connection"": b""keep-alive"",
+            b""User-Agent"": USER_AGENT.encode(""ascii""),
+        }
+    )
+    client_headers.update(headers)
+    self._headers = client_headers"
+tier1_004_collect,1.0,"This function, part of the Pytest testing framework, collects fixtures (setup and teardown functions) for a test session.",,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/python.py (line 563)
+# License: MIT
+# Complexity: 1
+# Tier   : tier1
+
+def collect(self) -> Iterable[nodes.Item | nodes.Collector]:
+    self._register_setup_module_fixture()
+    self._register_setup_function_fixture()
+    self.session._fixturemanager.parsefactories(self)
+    return super().collect()"
+tier1_005_start,1.0,"This function is intended to be overridden by subclasses and starts the I/O loop, which runs indefinitely until it's stopped by a call to `stop()`.",,"# Source : https://github.com/tornadoweb/tornado/blob/master/tornado/ioloop.py (line 441)
+# License: Apache-2.0
+# Complexity: 1
+# Tier   : tier1
+
+def start(self) -> None:
+    """"""Starts the I/O loop.
+
+    The loop will run until one of the callbacks calls `stop()`, which
+    will make the loop stop after the current event iteration completes.
+    """"""
+    raise NotImplementedError()"
+tier1_006__like_percent_literal,1.0,"This function generates a SQL literal that represents the wildcard character '%' in a LIKE query, surrounded by single quotes.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 3672)
+# License: MIT
+# Complexity: 1
+# Tier   : tier1
+
+def _like_percent_literal(self):
+    return elements.literal_column(""'%'"", type_=sqltypes.STRINGTYPE)"
+tier1_007_api_route,1.0,"This function is a decorator factory that creates a route for an API endpoint, allowing developers to customize various aspects of the route, such as its path, response model, and status code.",,"# Source : https://github.com/fastapi/fastapi/blob/master/fastapi/routing.py (line 1111)
+# License: MIT
+# Complexity: 1
+# Tier   : tier1
+
+def api_route(
+    self,
+    path: str,
+    *,
+    response_model: Any = Default(None),
+    status_code: int | None = None,
+    tags: list[str | Enum] | None = None,
+    dependencies: Sequence[params.Depends] | None = None,
+    summary: str | None = None,
+    description: str | None = None,
+    response_description: str = ""Successful Response"",
+    responses: dict[int | str, dict[str, Any]] | None = None,
+    deprecated: bool | None = None,
+    methods: list"
+tier1_008__is_clean,1.0,"This function checks if an object's identity map is clean, meaning it has not been modified or deleted.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/orm/session.py (line 4460)
+# License: MIT
+# Complexity: 3
+# Tier   : tier1
+
+def _is_clean(self) -> bool:
+    return (
+        not self.identity_map.check_modified()
+        and not self._deleted
+        and not self._new
+    )"
+tier1_009_visit_drop_column_comment,1.0,This function generates a SQL statement to drop the comment on a specific column in a database table.,,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 7294)
+# License: MIT
+# Complexity: 1
+# Tier   : tier1
+
+def visit_drop_column_comment(self, drop, **kw):
+    return ""COMMENT ON COLUMN %s IS NULL"" % self.preparer.format_column(
+        drop.element, use_table=True
+    )"
+tier1_010_raw_connection,1.0,"This function returns a ""raw"" DBAPI connection from the connection pool, providing direct access to the underlying database connection for special situations where the API provided by the `Connection` object is not needed.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/engine/base.py (line 3259)
+# License: MIT
+# Complexity: 1
+# Tier   : tier1
+
+def raw_connection(self) -> PoolProxiedConnection:
+    """"""Return a ""raw"" DBAPI connection from the connection pool.
+
+    The returned object is a proxied version of the DBAPI
+    connection object used by the underlying driver in use.
+    The object will have all the same behavior as the real DBAPI
+    connection, except that its ``close()`` method will result in the
+    connection being returned to the pool, rather than being closed
+    for r"
+tier1_011_grid,1.0,"This function creates a table with no lines, headers, or footer, allowing for customization of padding and edge settings.",,"# Source : https://github.com/Textualize/rich/blob/master/rich/table.py (line 253)
+# License: MIT
+# Complexity: 1
+# Tier   : tier1
+
+def grid(
+    cls,
+    *headers: Union[Column, str],
+    padding: PaddingDimensions = 0,
+    collapse_padding: bool = True,
+    pad_edge: bool = False,
+    expand: bool = False,
+) -> ""Table"":
+    """"""Get a table with no lines, headers, or footer.
+
+    Args:
+        *headers (Union[Column, str]): Column headers, either as a string, or :class:`~rich.table.Column` instance.
+        padding (PaddingDimensions, optional): Get padding around cells. Defaults to 0.
+       "
+tier1_012___bool__,1.0,This function returns a boolean value indicating whether the span or range object it is part of has an end position greater than its start position.,,"# Source : https://github.com/Textualize/rich/blob/master/rich/text.py (line 60)
+# License: MIT
+# Complexity: 1
+# Tier   : tier1
+
+def __bool__(self) -> bool:
+    return self.end > self.start"
+tier1_013_visit_regexp_replace_op_binary,1.0,This function raises a CompileError exception when attempting to compile a SQL query with a binary regular expression replacement operation that is not supported by the specified dialect.,,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 3831)
+# License: MIT
+# Complexity: 1
+# Tier   : tier1
+
+def visit_regexp_replace_op_binary(
+    self, binary: BinaryExpression[Any], operator: Any, **kw: Any
+) -> str:
+    raise exc.CompileError(
+        ""%s dialect does not support regular expression replacements""
+        % self.dialect.name
+    )"
+tier1_014_add_future,1.0,This function schedules a callback to be executed when a given asynchronous operation (represented by a Future object) completes.,,"# Source : https://github.com/tornadoweb/tornado/blob/master/tornado/ioloop.py (line 682)
+# License: Apache-2.0
+# Complexity: 3
+# Tier   : tier1
+
+def add_future(
+    self,
+    future: ""Union[Future[_T], concurrent.futures.Future[_T]]"",
+    callback: Callable[[""Future[_T]""], None],
+) -> None:
+    """"""Schedules a callback on the ``IOLoop`` when the given
+    `.Future` is finished.
+
+    The callback is invoked with one argument, the
+    `.Future`.
+
+    This method only accepts `.Future` objects and not other
+    awaitables (unlike most of Tornado where the two are
+    interchangeable).
+    """"""
+   "
+tier1_015_get_schema_from_ref,1.0,This function retrieves a Pydantic schema definition by its reference string.,,"# Source : https://github.com/pydantic/pydantic/blob/main/pydantic/_internal/_generate_schema.py (line 2728)
+# License: MIT
+# Complexity: 1
+# Tier   : tier1
+
+def get_schema_from_ref(self, ref: str) -> CoreSchema | None:
+    """"""Resolve the schema from the given reference.""""""
+    return self._definitions.get(ref)"
+tier1_016_render_embed_js,1.0,"This function generates and returns a JavaScript string that embeds the provided JavaScript code, wrapping it in a script tag with a CDATA section.",,"# Source : https://github.com/tornadoweb/tornado/blob/master/tornado/web.py (line 1087)
+# License: Apache-2.0
+# Complexity: 1
+# Tier   : tier1
+
+def render_embed_js(self, js_embed: Iterable[bytes]) -> bytes:
+    """"""Default method used to render the final embedded js for the
+    rendered webpage.
+
+    Override this method in a sub-classed controller to change the output.
+    """"""
+    return (
+        b'<script type=""text/javascript"">\n//<![CDATA[\n'
+        + b""\n"".join(js_embed)
+        + b""\n//]]>\n</script>""
+    )"
+tier1_017___init__,1.0,"This function initializes a new instance of an HTTP client class, setting the initial request and default parameters for future operations.",,"# Source : https://github.com/tornadoweb/tornado/blob/master/tornado/httpclient.py (line 743)
+# License: Apache-2.0
+# Complexity: 1
+# Tier   : tier1
+
+def __init__(
+    self, request: HTTPRequest, defaults: Optional[Dict[str, Any]]
+) -> None:
+    self.request = request
+    self.defaults = defaults"
+tier1_018_closed,1.0,This function checks whether a database connection is closed by verifying that the underlying database API connection is `None` and that reconnecting is not possible.,,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/engine/base.py (line 553)
+# License: MIT
+# Complexity: 2
+# Tier   : tier1
+
+def closed(self) -> bool:
+    """"""Return True if this connection is closed.""""""
+
+    return self._dbapi_connection is None and not self.__can_reconnect"
+tier1_019__expire_state,1.0,"This function is responsible for expiring the state of an object in a SQLAlchemy session, which involves removing its attributes and re-fetching associated objects to maintain consistency with the session's current state.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/orm/session.py (line 3329)
+# License: MIT
+# Complexity: 3
+# Tier   : tier1
+
+def _expire_state(
+    self,
+    state: InstanceState[Any],
+    attribute_names: Optional[Iterable[str]],
+) -> None:
+    self._validate_persistent(state)
+    if attribute_names:
+        state._expire_attributes(state.dict, attribute_names)
+    else:
+        # pre-fetch the full cascade since the expire is going to
+        # remove associations
+        cascaded = list(
+            state.manager.mapper.cascade_iterator(""refresh-expire"", state)
+ "
+tier1_020_render,1.0,"This function generates and returns the HTML for an XSRF (Cross-Site Request Forgery) form, which is a security measure to prevent malicious scripts from making unauthorized requests on behalf of a user.",,"# Source : https://github.com/tornadoweb/tornado/blob/master/tornado/web.py (line 3466)
+# License: Apache-2.0
+# Complexity: 1
+# Tier   : tier1
+
+def render(self) -> str:
+    return self.handler.xsrf_form_html()"
+tier1_021__rget_with_confmod,1.0,This function retrieves a module and its attribute from the configuration files specified by the provided path.,,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/config/__init__.py (line 695)
+# License: MIT
+# Complexity: 3
+# Tier   : tier1
+
+def _rget_with_confmod(
+    self,
+    name: str,
+    path: pathlib.Path,
+) -> tuple[types.ModuleType, Any]:
+    modules = self._getconftestmodules(path)
+    for mod in reversed(modules):
+        try:
+            return mod, getattr(mod, name)
+        except AttributeError:
+            continue
+    raise KeyError(name)"
+tier1_022_define_constraint_cascades,1.0,"This function generates a SQL string that defines the cascading behavior for a given ForeignKeyConstraint, including ondelete and onupdate actions.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 7528)
+# License: MIT
+# Complexity: 3
+# Tier   : tier1
+
+def define_constraint_cascades(
+    self, constraint: ForeignKeyConstraint
+) -> str:
+    text = """"
+    if constraint.ondelete is not None:
+        text += self.define_constraint_ondelete_cascade(constraint)
+
+    if constraint.onupdate is not None:
+        text += self.define_constraint_onupdate_cascade(constraint)
+    return text"
+tier1_023_from_call,1.0,"This function, `from_call`, wraps the execution of a given function (`func`) in a structured way, collecting information about the call's timing, phase, and any exceptions that may be raised, and returns an instance of `CallInfo` containing this information.",,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/runner.py (line 336)
+# License: MIT
+# Complexity: 4
+# Tier   : tier1
+
+def from_call(
+    cls,
+    func: Callable[[], TResult],
+    when: Literal[""collect"", ""setup"", ""call"", ""teardown""],
+    reraise: type[BaseException] | tuple[type[BaseException], ...] | None = None,
+) -> CallInfo[TResult]:
+    """"""Call func, wrapping the result in a CallInfo.
+
+    :param func:
+        The function to call. Called without arguments.
+    :type func: Callable[[], _pytest.runner.TResult]
+    :param when:
+        The phase in which the function i"
+tier1_024_copy,1.0,"This function creates a deep copy of the given `Text` instance, copying all its attributes and references to ensure that any modifications made to the copied instance do not affect the original.",,"# Source : https://github.com/Textualize/rich/blob/master/rich/text.py (line 443)
+# License: MIT
+# Complexity: 1
+# Tier   : tier1
+
+def copy(self) -> ""Text"":
+    """"""Return a copy of this instance.""""""
+    copy_self = Text(
+        self.plain,
+        style=self.style,
+        justify=self.justify,
+        overflow=self.overflow,
+        no_wrap=self.no_wrap,
+        end=self.end,
+        tab_size=self.tab_size,
+    )
+    copy_self._spans[:] = self._spans
+    return copy_self"
+tier1_025_get_version,1.0,"This function generates a version string for a static asset based on its absolute file path, which is used in static URLs.",,"# Source : https://github.com/tornadoweb/tornado/blob/master/tornado/web.py (line 3183)
+# License: Apache-2.0
+# Complexity: 1
+# Tier   : tier1
+
+def get_version(cls, settings: Dict[str, Any], path: str) -> Optional[str]:
+    """"""Generate the version string to be used in static URLs.
+
+    ``settings`` is the `Application.settings` dictionary and ``path``
+    is the relative location of the requested asset on the filesystem.
+    The returned value should be a string, or ``None`` if no version
+    could be determined.
+
+    .. versionchanged:: 3.1
+       This method was previously recommended for su"
+tier2_001___init__,1.0,"This function initializes a new Connection object, which is used to establish a connection to a database, and sets various attributes related to the connection, such as the dialect, transaction management, and event handling.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/engine/base.py (line 134)
+# License: MIT
+# Complexity: 8
+# Tier   : tier2
+
+def __init__(
+    self,
+    engine: Engine,
+    connection: Optional[PoolProxiedConnection] = None,
+    _has_events: Optional[bool] = None,
+    _allow_revalidate: bool = True,
+    _allow_autobegin: bool = True,
+):
+    """"""Construct a new Connection.""""""
+    self.engine = engine
+    self.dialect = dialect = engine.dialect
+
+    if connection is None:
+        try:
+            self._dbapi_connection = engine.raw_connection()
+        except dialect.lo"
+tier2_002_get,1.0,"This function generates a ""row"" that represents the primary key of an INSERT operation, either by using the provided `lastrowid` value or extracting values from the parameters used for the INSERT.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 2365)
+# License: MIT
+# Complexity: 7
+# Tier   : tier2
+
+def get(lastrowid, parameters):
+    """"""given cursor.lastrowid value and the parameters used for INSERT,
+    return a ""row"" that represents the primary key, either by
+    using the ""lastrowid"" or by extracting values from the parameters
+    that were sent along with the INSERT.
+
+    """"""
+    if lastrowid_processor is not None:
+        lastrowid = lastrowid_processor(lastrowid)
+
+    if lastrowid is None:
+        return row_fn(getter(parameters) "
+tier2_003__set_initial_conftests,1.0,"This function loads initial conftest files given a preparsed ""namespace"" by iterating through the provided paths, checking if they are anchors or exist, and attempting to load their corresponding conftest files.",,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/config/__init__.py (line 568)
+# License: MIT
+# Complexity: 6
+# Tier   : tier2
+
+def _set_initial_conftests(
+    self,
+    args: Sequence[str | pathlib.Path],
+    pyargs: bool,
+    noconftest: bool,
+    rootpath: pathlib.Path,
+    confcutdir: pathlib.Path | None,
+    invocation_dir: pathlib.Path,
+    importmode: ImportMode | str,
+    *,
+    consider_namespace_packages: bool,
+) -> None:
+    """"""Load initial conftest files given a preparsed ""namespace"".
+
+    As conftest files may add their own command line options which have
+    "
+tier2_004_flush,1.0,"This function flushes the current output buffer to the network, ensuring that all headers and data are sent to the client before closing the connection.",,"# Source : https://github.com/tornadoweb/tornado/blob/master/tornado/web.py (line 1199)
+# License: Apache-2.0
+# Complexity: 10
+# Tier   : tier2
+
+def flush(self, include_footers: bool = False) -> ""Future[None]"":
+    """"""Flushes the current output buffer to the network.
+
+    .. versionchanged:: 4.0
+       Now returns a `.Future` if no callback is given.
+
+    .. versionchanged:: 6.0
+
+       The ``callback`` argument was removed.
+    """"""
+    assert self.request.connection is not None
+    chunk = b"""".join(self._write_buffer)
+    self._write_buffer = []
+    if not self._headers_written:
+        self."
+tier2_005__connect_and_send_request,1.0,"This function establishes a connection to the specified host and sends an HTTP request, handling potential timeouts, protocol settings, and response parsing.",,"# Source : https://github.com/aio-libs/aiohttp/blob/master/aiohttp/client.py (line 715)
+# License: Apache-2.0
+# Complexity: 6
+# Tier   : tier2
+
+async def _connect_and_send_request(
+    req: ClientRequest,
+) -> ClientResponse:
+    # connection timeout
+    assert self._connector is not None
+    try:
+        conn = await self._connector.connect(
+            req, traces=traces, timeout=real_timeout
+        )
+    except asyncio.TimeoutError as exc:
+        raise ConnectionTimeoutError(
+            f""Connection timeout to host {req.url}""
+        ) from exc
+
+    assert conn.protocol is not None
+    c"
+tier2_006__available_connections,1.0,"This function calculates the number of available connections, taking into account a global limit, a per-host limit, and any previously acquired connections for a given connection key.",,"# Source : https://github.com/aio-libs/aiohttp/blob/master/aiohttp/connector.py (line 528)
+# License: Apache-2.0
+# Complexity: 6
+# Tier   : tier2
+
+def _available_connections(self, key: ""ConnectionKey"") -> int:
+    """"""
+    Return number of available connections.
+
+    The limit, limit_per_host and the connection key are taken into account.
+
+    If it returns less than 1 means that there are no connections
+    available.
+    """"""
+    # check total available connections
+    # If there are no limits, this will always return 1
+    total_remain = 1
+
+    if self._limit and (total_remain := self._limit "
+tier2_007_ensure_multipart_is_installed,1.0,"This function checks if the `python_multipart` or `multipart` library is installed and its version meets a minimum requirement, raising an error if either library is not installed or its version is too old.",,"# Source : https://github.com/fastapi/fastapi/blob/master/fastapi/dependencies/utils.py (line 84)
+# License: MIT
+# Complexity: 7
+# Tier   : tier2
+
+def ensure_multipart_is_installed() -> None:
+    try:
+        from python_multipart import __version__
+
+        # Import an attribute that can be mocked/deleted in testing
+        assert __version__ > ""0.0.12""
+    except (ImportError, AssertionError):
+        try:
+            # __version__ is available in both multiparts, and can be mocked
+            from multipart import __version__  # type: ignore[no-redef,import-untyped]
+
+            assert __ve"
+tier2_008_call_and_report,1.0,"This function is responsible for executing a test hook (setup, call, or teardown) and reporting the result of the test execution.",,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/runner.py (line 231)
+# License: MIT
+# Complexity: 7
+# Tier   : tier2
+
+def call_and_report(
+    item: Item, when: Literal[""setup"", ""call"", ""teardown""], log: bool = True, **kwds
+) -> TestReport:
+    ihook = item.ihook
+    if when == ""setup"":
+        runtest_hook: Callable[..., None] = ihook.pytest_runtest_setup
+    elif when == ""call"":
+        runtest_hook = ihook.pytest_runtest_call
+    elif when == ""teardown"":
+        runtest_hook = ihook.pytest_runtest_teardown
+    else:
+        assert False, f""Unhandled runtest hook case: "
+tier2_009_get_identity_options,1.0,"This function generates a SQL string that defines the identity options for an auto-incrementing column, including settings such as increment value, starting value, minimum and maximum values, caching, and cycling.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 7305)
+# License: MIT
+# Complexity: 10
+# Tier   : tier2
+
+def get_identity_options(self, identity_options: IdentityOptions) -> str:
+    text = []
+    if identity_options.increment is not None:
+        text.append(""INCREMENT BY %d"" % identity_options.increment)
+    if identity_options.start is not None:
+        text.append(""START WITH %d"" % identity_options.start)
+    if identity_options.minvalue is not None:
+        text.append(""MINVALUE %d"" % identity_options.minvalue)
+    if identity_options.maxv"
+tier2_010_send_error,1.0,"This function sends an HTTP error response to the browser with a specified status code and optional reason message, overriding any previously written output and potentially terminating the response.",,"# Source : https://github.com/tornadoweb/tornado/blob/master/tornado/web.py (line 1326)
+# License: Apache-2.0
+# Complexity: 10
+# Tier   : tier2
+
+def send_error(self, status_code: int = 500, **kwargs: Any) -> None:
+    """"""Sends the given HTTP error code to the browser.
+
+    If `flush()` has already been called, it is not possible to send
+    an error, so this method will simply terminate the response.
+    If output has been written but not yet flushed, it will be discarded
+    and replaced with the error page.
+
+    Override `write_error()` to customize the error page that is returned.
+    Addit"
+tier2_011__traceback_filter,1.0,"This function filters and formats the traceback information from an exception, potentially removing unnecessary details or modifying its style according to the test configuration.",,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/python.py (line 1690)
+# License: MIT
+# Complexity: 9
+# Tier   : tier2
+
+def _traceback_filter(self, excinfo: ExceptionInfo[BaseException]) -> Traceback:
+    if hasattr(self, ""_obj"") and not self.config.getoption(""fulltrace"", False):
+        code = _pytest._code.Code.from_function(get_real_func(self.obj))
+        path, firstlineno = code.path, code.firstlineno
+        traceback = excinfo.traceback
+        ntraceback = traceback.cut(path=path, firstlineno=firstlineno)
+        if ntraceback == traceback:
+            ntraceback ="
+tier2_012_render_lines,1.0,"This function renders a given `renderable` object into a list of lines, where each line is a list of segments, and optionally applies a specified style to the rendered text.",,"# Source : https://github.com/Textualize/rich/blob/master/rich/console.py (line 1351)
+# License: MIT
+# Complexity: 7
+# Tier   : tier2
+
+def render_lines(
+    self,
+    renderable: RenderableType,
+    options: Optional[ConsoleOptions] = None,
+    *,
+    style: Optional[Style] = None,
+    pad: bool = True,
+    new_lines: bool = False,
+) -> List[List[Segment]]:
+    """"""Render objects in to a list of lines.
+
+    The output of render_lines is useful when further formatting of rendered console text
+    is required, such as the Panel class which draws a border around any renderable object.
+
+    Args:
+ "
+tier2_013___init__,1.0,"This function initializes a new instance of the `Compiled` class, which is used to compile SQL statements against a specific dialect and schema translate map, and sets various internal state variables based on the provided parameters.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 889)
+# License: MIT
+# Complexity: 8
+# Tier   : tier2
+
+def __init__(
+    self,
+    dialect: Dialect,
+    statement: Optional[ClauseElement],
+    schema_translate_map: Optional[SchemaTranslateMapType] = None,
+    render_schema_translate: bool = False,
+    compile_kwargs: Mapping[str, Any] = util.immutabledict(),
+):
+    """"""Construct a new :class:`.Compiled` object.
+
+    :param dialect: :class:`.Dialect` to compile against.
+
+    :param statement: :class:`_expression.ClauseElement` to be compiled.
+
+  "
+tier2_014_visit_override_binds,1.0,"This function is used to compile and modify the SQL statement of an _OverrideBinds object, which contains bind parameters that need to be swapped out at execution time.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 2448)
+# License: MIT
+# Complexity: 8
+# Tier   : tier2
+
+def visit_override_binds(self, override_binds, **kw):
+    """"""SQL compile the nested element of an _OverrideBinds with
+    bindparams swapped out.
+
+    The _OverrideBinds is not normally expected to be compiled; it
+    is meant to be used when an already cached statement is to be used,
+    the compilation was already performed, and only the bound params should
+    be swapped in at execution time.
+
+    However, there are test cases that exerici"
+tier2_015_task,1.0,"This function is a decorator that creates a task class out of any callable, allowing it to be used with Celery's task queue system.",,"# Source : https://github.com/celery/celery/blob/main/celery/app/base.py (line 489)
+# License: BSD-3
+# Complexity: 6
+# Tier   : tier2
+
+def task(self, *args, **opts):
+    """"""Decorator to create a task class out of any callable.
+
+    See :ref:`Task options<task-options>` for a list of the
+    arguments that can be passed to this decorator.
+
+    Examples:
+        .. code-block:: python
+
+            @app.task
+            def refresh_feed(url):
+                store_feed(feedparser.parse(url))
+
+        with setting extra options:
+
+        .. code-block:: python
+
+            @app.task(exchange='feed"
+tier2_016__get_proxy_map,1.0,"This function generates a dictionary mapping all available proxies to the specified proxy, either from environment variables or a provided proxy URL.",,"# Source : https://github.com/encode/httpx/blob/master/httpx/_client.py (line 239)
+# License: BSD-3
+# Complexity: 6
+# Tier   : tier2
+
+def _get_proxy_map(
+    self, proxy: ProxyTypes | None, allow_env_proxies: bool
+) -> dict[str, Proxy | None]:
+    if proxy is None:
+        if allow_env_proxies:
+            return {
+                key: None if url is None else Proxy(url=url)
+                for key, url in get_environment_proxies().items()
+            }
+        return {}
+    else:
+        proxy = Proxy(url=proxy) if isinstance(proxy, (str, URL)) else proxy
+        return {""all://"": proxy}"
+tier2_017_collect,1.0,"This function, part of the pytest framework, filters out test classes that have an __init__ or __new__ constructor and instead collects fixtures for those classes.",,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/python.py (line 757)
+# License: MIT
+# Complexity: 6
+# Tier   : tier2
+
+def collect(self) -> Iterable[nodes.Item | nodes.Collector]:
+    if not safe_getattr(self.obj, ""__test__"", True):
+        return []
+    if hasinit(self.obj):
+        assert self.parent is not None
+        self.warn(
+            PytestCollectionWarning(
+                f""cannot collect test class {self.obj.__name__!r} because it has a ""
+                f""__init__ constructor (from: {self.parent.nodeid})""
+            )
+        )
+        return []
+    elif ha"
+tier2_018___init__,1.0,"This function initializes a test case object in the Pytest framework, setting various attributes such as the test name, parent node, and configuration, while also handling fixtures, callspecs, and markers.",,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/python.py (line 1584)
+# License: MIT
+# Complexity: 7
+# Tier   : tier2
+
+def __init__(
+    self,
+    name: str,
+    parent,
+    config: Config | None = None,
+    callspec: CallSpec2 | None = None,
+    callobj=NOTSET,
+    keywords: Mapping[str, Any] | None = None,
+    session: Session | None = None,
+    fixtureinfo: FuncFixtureInfo | None = None,
+    originalname: str | None = None,
+) -> None:
+    super().__init__(name, parent, config=config, session=session)
+
+    if callobj is not NOTSET:
+        self._obj = callobj
+        se"
+tier2_019__get_plugin_specs_as_list,1.0,"This function takes a plugins specification (which can be an empty value, a module name, a comma-separated list of plugin names, or a direct list of plugin names) and returns it as a list of plugin names in a format that can be used by the pytest testing framework.",,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/config/__init__.py (line 905)
+# License: MIT
+# Complexity: 6
+# Tier   : tier2
+
+def _get_plugin_specs_as_list(
+    specs: None | types.ModuleType | str | Sequence[str],
+) -> list[str]:
+    """"""Parse a plugins specification into a list of plugin names.""""""
+    # None means empty.
+    if specs is None:
+        return []
+    # Workaround for #3899 - a submodule which happens to be called ""pytest_plugins"".
+    if isinstance(specs, types.ModuleType):
+        return []
+    # Comma-separated list.
+    if isinstance(specs, str):
+      "
+tier2_020__prepareconfig,1.0,This function prepares and returns a configuration object for the pytest testing framework by parsing command-line arguments and plugins.,,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/config/__init__.py (line 342)
+# License: MIT
+# Complexity: 7
+# Tier   : tier2
+
+def _prepareconfig(
+    args: list[str] | os.PathLike[str],
+    plugins: Sequence[str | _PluggyPlugin] | None = None,
+) -> Config:
+    if isinstance(args, os.PathLike):
+        args = [os.fspath(args)]
+    elif not isinstance(args, list):
+        msg = (  # type:ignore[unreachable]
+            ""`args` parameter expected to be a list of strings, got: {!r} (type: {})""
+        )
+        raise TypeError(msg.format(args, type(args)))
+
+    initial_confi"
+tier2_021__inserted_primary_key_from_returning_get,1.0,This function generates a custom function that can be used to retrieve the inserted primary key values from an INSERT statement with an explicit RETURNING clause.,,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 2395)
+# License: MIT
+# Complexity: 9
+# Tier   : tier2
+
+def _inserted_primary_key_from_returning_getter(self):
+    result = util.preloaded.engine_result
+
+    assert self.compile_state is not None
+    statement = self.compile_state.statement
+
+    if TYPE_CHECKING:
+        assert isinstance(statement, Insert)
+
+    param_key_getter = self._within_exec_param_key_getter
+    table = statement.table
+
+    returning = self.implicit_returning
+    assert returning is not None
+    ret = {col: idx for idx, col"
+tier2_022_get_column_specification,1.0,"This function generates a string representation of the column specification for a given SQLAlchemy Column object, including its data type, default value, computed columns, and identity constraints.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 7363)
+# License: MIT
+# Complexity: 8
+# Tier   : tier2
+
+def get_column_specification(
+    self, column: Column[Any], **kwargs: Any
+) -> str:
+    colspec = (
+        self.preparer.format_column(column)
+        + "" ""
+        + self.dialect.type_compiler_instance.process(
+            column.type, type_expression=column
+        )
+    )
+    default = self.get_column_default_string(column)
+    if default is not None:
+        colspec += "" DEFAULT "" + default
+
+    if column.computed is not None:
+        c"
+tier2_023__release,1.0,"This function releases a connection from the connector, which involves closing any associated transport and updating internal state to handle future connections.",,"# Source : https://github.com/aio-libs/aiohttp/blob/master/aiohttp/connector.py (line 759)
+# License: Apache-2.0
+# Complexity: 8
+# Tier   : tier2
+
+def _release(
+    self,
+    key: ""ConnectionKey"",
+    protocol: ResponseHandler,
+    *,
+    should_close: bool = False,
+) -> None:
+    if self._closed:
+        # acquired connection is already released on connector closing
+        return
+
+    self._release_acquired(key, protocol)
+
+    if self._force_close or should_close or protocol.should_close:
+        transport = protocol.transport
+        protocol.close()
+        if key.is_ssl and not self._clea"
+tier2_024_etag,1.0,"This function sets the ETag header in an HTTP response based on the provided value, which can be a string, an ETag object, or None, and validates its format according to the HTTP specification.",,"# Source : https://github.com/aio-libs/aiohttp/blob/master/aiohttp/web_response.py (line 297)
+# License: Apache-2.0
+# Complexity: 10
+# Tier   : tier2
+
+def etag(self, value: ETag | str | None) -> None:
+    if value is None:
+        self._headers.pop(hdrs.ETAG, None)
+    elif (isinstance(value, str) and value == ETAG_ANY) or (
+        isinstance(value, ETag) and value.value == ETAG_ANY
+    ):
+        self._headers[hdrs.ETAG] = ETAG_ANY
+    elif isinstance(value, str):
+        validate_etag_value(value)
+        self._headers[hdrs.ETAG] = f'""{value}""'
+    elif isinstance(value, ETag) and isinstanc"
+tier2_025_render,1.0,"This function renders a given object into an iterable of `Segment` instances according to the console protocol, handling various types of objects and options.",,"# Source : https://github.com/Textualize/rich/blob/master/rich/console.py (line 1300)
+# License: MIT
+# Complexity: 9
+# Tier   : tier2
+
+def render(
+    self, renderable: RenderableType, options: Optional[ConsoleOptions] = None
+) -> Iterable[Segment]:
+    """"""Render an object in to an iterable of `Segment` instances.
+
+    This method contains the logic for rendering objects with the console protocol.
+    You are unlikely to need to use it directly, unless you are extending the library.
+
+    Args:
+        renderable (RenderableType): An object supporting the console protocol, or
+            an obj"
+tier3_001_visit_function,1.0,"This function generates a SQL string representation of a given Python function, including its name and any arguments it takes.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 3099)
+# License: MIT
+# Complexity: 12
+# Tier   : tier3
+
+def visit_function(
+    self,
+    func: Function[Any],
+    add_to_result_map: Optional[_ResultMapAppender] = None,
+    **kwargs: Any,
+) -> str:
+    if self._collect_params:
+        self._add_to_params(func)
+    if add_to_result_map is not None:
+        add_to_result_map(func.name, func.name, (func.name,), func.type)
+
+    disp = getattr(self, ""visit_%s_func"" % func.name.lower(), None)
+
+    text: str
+
+    if disp:
+        text = disp(func, **k"
+tier3_002__collapse_widths,1.0,This function reduces the widths of columns in a table to fit within a specified maximum width while allowing some columns to potentially shrink if they are wrapable.,,"# Source : https://github.com/Textualize/rich/blob/master/rich/table.py (line 589)
+# License: MIT
+# Complexity: 14
+# Tier   : tier3
+
+def _collapse_widths(
+    cls, widths: List[int], wrapable: List[bool], max_width: int
+) -> List[int]:
+    """"""Reduce widths so that the total is under max_width.
+
+    Args:
+        widths (List[int]): List of widths.
+        wrapable (List[bool]): List of booleans that indicate if a column may shrink.
+        max_width (int): Maximum width to reduce to.
+
+    Returns:
+        List[int]: A new list of widths.
+    """"""
+    total_width = sum(widths)
+    excess_width ="
+tier3_003_visit_compound_select,1.0,"This function generates the SQL code for a compound select statement, which is a SELECT statement that combines multiple sub-queries or other SELECT statements.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 3159)
+# License: MIT
+# Complexity: 13
+# Tier   : tier3
+
+def visit_compound_select(
+    self, cs, asfrom=False, compound_index=None, **kwargs
+):
+    if self._collect_params:
+        self._add_to_params(cs)
+    toplevel = not self.stack
+
+    compile_state = cs._compile_state_factory(cs, self, **kwargs)
+
+    if toplevel and not self.compile_state:
+        self.compile_state = compile_state
+
+    compound_stmt = compile_state.statement
+
+    entry = self._default_stack_entry if toplevel else self.stack"
+tier3_004_request_params_to_args,1.0,"This function takes in a list of model fields and received parameters (which can be query parameters, headers, or multidict), extracts the relevant values from the received parameters, validates them against the model fields, and returns a dictionary of validated values and any validation errors.",,"# Source : https://github.com/fastapi/fastapi/blob/master/fastapi/dependencies/utils.py (line 751)
+# License: MIT
+# Complexity: 20
+# Tier   : tier3
+
+def request_params_to_args(
+    fields: Sequence[ModelField],
+    received_params: Mapping[str, Any] | QueryParams | Headers,
+) -> tuple[dict[str, Any], list[Any]]:
+    values: dict[str, Any] = {}
+    errors: list[dict[str, Any]] = []
+
+    if not fields:
+        return values, errors
+
+    first_field = fields[0]
+    fields_to_extract = fields
+    single_not_embedded_field = False
+    default_convert_underscores = True
+    if len(fields) == 1 and l"
+tier3_005__arguments_schema,1.0,"This function generates a schema for the arguments of a Python function, including support for positional-only parameters, variable-length argument lists, and keyword-only parameters with typed dictionaries.",,"# Source : https://github.com/pydantic/pydantic/blob/main/pydantic/_internal/_generate_schema.py (line 1955)
+# License: MIT
+# Complexity: 16
+# Tier   : tier3
+
+def _arguments_schema(
+    self, function: ValidateCallSupportedTypes, parameters_callback: ParametersCallback | None = None
+) -> core_schema.ArgumentsSchema:
+    """"""Generate schema for a Signature.""""""
+    mode_lookup: dict[_ParameterKind, Literal['positional_only', 'positional_or_keyword', 'keyword_only']] = {
+        Parameter.POSITIONAL_ONLY: 'positional_only',
+        Parameter.POSITIONAL_OR_KEYWORD: 'positional_or_keyword',
+        "
+tier3_006__register_persistent,1.0,"This function registers all persistent objects from a flush operation in an ORM session, handling object identity key updates and ensuring consistency with the database.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/orm/session.py (line 3396)
+# License: MIT
+# Complexity: 18
+# Tier   : tier3
+
+def _register_persistent(self, states: Set[InstanceState[Any]]) -> None:
+    """"""Register all persistent objects from a flush.
+
+    This is used both for pending objects moving to the persistent
+    state as well as already persistent objects.
+
+    """"""
+
+    pending_to_persistent = self.dispatch.pending_to_persistent or None
+    for state in states:
+        mapper = _state_mapper(state)
+
+        # prevent against last minute dereferences of the"
+tier3_007_visit_column,1.0,"This function generates a SQL column reference string based on the provided column object and various optional parameters, including table names, aliases, and result mapping.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 2675)
+# License: MIT
+# Complexity: 17
+# Tier   : tier3
+
+def visit_column(
+    self,
+    column: ColumnClause[Any],
+    add_to_result_map: Optional[_ResultMapAppender] = None,
+    include_table: bool = True,
+    result_map_targets: Tuple[Any, ...] = (),
+    ambiguous_table_name_map: Optional[_AmbiguousTableNameMap] = None,
+    **kwargs: Any,
+) -> str:
+    name = orig_name = column.name
+    if name is None:
+        name = self._fallback_column_name(column)
+
+    is_literal = column.is_literal
+    if"
+tier3_008___init__,1.0,"This function initializes a Celery application object, setting up various attributes such as task classes, logging, and configuration options, while also registering the app with Celery's internal framework.",,"# Source : https://github.com/celery/celery/blob/main/celery/app/base.py (line 317)
+# License: BSD-3
+# Complexity: 17
+# Tier   : tier3
+
+def __init__(self, main=None, loader=None, backend=None,
+             amqp=None, events=None, log=None, control=None,
+             set_as_current=True, tasks=None, broker=None, include=None,
+             changes=None, config_source=None, fixups=None, task_cls=None,
+             autofinalize=True, namespace=None, strict_typing=True,
+             **kwargs):
+
+    self._local = threading.local()
+    self._backend_cache = None
+
+    self.clock = LamportClock()
+    s"
+tier3_009__enum_schema,1.0,"This function generates a JSON schema for an enumeration type in Pydantic, allowing it to be used in serialization and validation processes.",,"# Source : https://github.com/pydantic/pydantic/blob/main/pydantic/_internal/_generate_schema.py (line 395)
+# License: MIT
+# Complexity: 11
+# Tier   : tier3
+
+def _enum_schema(self, enum_type: type[Enum]) -> CoreSchema:
+    cases: list[Any] = list(enum_type.__members__.values())
+
+    enum_ref = get_type_ref(enum_type)
+    description = None if not enum_type.__doc__ else inspect.cleandoc(enum_type.__doc__)
+    if (
+        description == 'An enumeration.'
+    ):  # This is the default value provided by enum.EnumMeta.__new__; don't use it
+        description = None
+    js_updates = {'title': enum"
+tier3_010_merge_field_infos,1.0,"This function merges multiple `FieldInfo` instances into a single instance, keeping only explicitly set attributes and overriding earlier ones with later ones.",,"# Source : https://github.com/pydantic/pydantic/blob/main/pydantic/fields.py (line 577)
+# License: MIT
+# Complexity: 14
+# Tier   : tier3
+
+def merge_field_infos(*field_infos: FieldInfo, **overrides: Any) -> FieldInfo:
+    """"""Merge `FieldInfo` instances keeping only explicitly set attributes.
+
+    Later `FieldInfo` instances override earlier ones.
+
+    Returns:
+        FieldInfo: A merged FieldInfo instance.
+    """"""
+    if len(field_infos) == 1:
+        # No merging necessary, but we still need to make a copy and apply the overrides
+        field_info = field_infos[0]._copy()
+        field_info."
+tier3_011_find_spec,1.0,"This function is part of a testing framework and is used to find the specification for a given module or file, taking into account various factors such as rewriting rules, import modes, and file existence.",,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/assertion/rewrite.py (line 102)
+# License: MIT
+# Complexity: 12
+# Tier   : tier3
+
+def find_spec(
+    self,
+    name: str,
+    path: Sequence[str | bytes] | None = None,
+    target: types.ModuleType | None = None,
+) -> importlib.machinery.ModuleSpec | None:
+    if self._writing_pyc:
+        return None
+    state = self.config.stash[assertstate_key]
+    if self._early_rewrite_bailout(name, state):
+        return None
+    state.trace(f""find_module called for: {name}"")
+
+    # Type ignored because mypy is confused about the `self"
+tier3_012_parse,1.0,"This function parses the given command-line arguments into a configuration object for pytest, allowing it to be used as a base for further configuration and plugin loading.",,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/config/__init__.py (line 1485)
+# License: MIT
+# Complexity: 14
+# Tier   : tier3
+
+def parse(self, args: list[str], addopts: bool = True) -> None:
+    # Parse given cmdline arguments into this config object.
+    assert self.args == [], (
+        ""can only parse cmdline args at most once per Config object""
+    )
+
+    self.hook.pytest_addhooks.call_historic(
+        kwargs=dict(pluginmanager=self.pluginmanager)
+    )
+
+    if addopts:
+        env_addopts = os.environ.get(""PYTEST_ADDOPTS"", """")
+        if len(env_addopts):
+        "
+tier3_013__get_assertion_exprs,1.0,"This function takes a source code string as input, parses it to extract assertion test expressions from the code, and returns a dictionary mapping line numbers to their corresponding assertion test expressions.",,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/assertion/rewrite.py (line 561)
+# License: MIT
+# Complexity: 19
+# Tier   : tier3
+
+def _get_assertion_exprs(src: bytes) -> dict[int, str]:
+    """"""Return a mapping from {lineno: ""assertion test expression""}.""""""
+    ret: dict[int, str] = {}
+
+    depth = 0
+    lines: list[str] = []
+    assert_lineno: int | None = None
+    seen_lines: set[int] = set()
+
+    def _write_and_reset() -> None:
+        nonlocal depth, lines, assert_lineno, seen_lines
+        assert assert_lineno is not None
+        ret[assert_lineno] = """".join(lines).rs"
+tier3_014_size,1.0,"This function retrieves the size of a console, taking into account various factors such as terminal type, environment variables, and pseudo-terminals, to return a named tuple containing the dimensions.",,"# Source : https://github.com/Textualize/rich/blob/master/rich/console.py (line 1011)
+# License: MIT
+# Complexity: 16
+# Tier   : tier3
+
+def size(self) -> ConsoleDimensions:
+    """"""Get the size of the console.
+
+    Returns:
+        ConsoleDimensions: A named tuple containing the dimensions.
+    """"""
+
+    if self._width is not None and self._height is not None:
+        return ConsoleDimensions(self._width - self.legacy_windows, self._height)
+
+    if self.is_dumb_terminal:
+        return ConsoleDimensions(80, 25)
+
+    width: Optional[int] = None
+    height: Optional[int] = None
+
+    streams = _STD"
+tier3_015__getini_ini,1.0,"This function is used to parse and coerce configuration values read in INI mode, handling different data types such as strings, lists, integers, floats, and booleans.",,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/config/__init__.py (line 1719)
+# License: MIT
+# Complexity: 17
+# Tier   : tier3
+
+def _getini_ini(
+    self,
+    name: str,
+    canonical_name: str,
+    type: str,
+    value: str | list[str],
+    default: Any,
+):
+    """"""Handle config values read in INI mode.
+
+    In INI mode, values are stored as str or list[str] only, and coerced
+    from string based on the registered type.
+    """"""
+    # Note: some coercions are only required if we are reading from .ini
+    # files, because the file format doesn't contain type information, "
+tier3_016_visit_table,1.0,"This function generates a string representation of a database table name, taking into account various factors such as schema usage, aliasing, and hints.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 5530)
+# License: MIT
+# Complexity: 14
+# Tier   : tier3
+
+def visit_table(
+    self,
+    table,
+    asfrom=False,
+    iscrud=False,
+    ashint=False,
+    fromhints=None,
+    use_schema=True,
+    from_linter=None,
+    ambiguous_table_name_map=None,
+    enclosing_alias=None,
+    within_tstring=False,
+    **kwargs,
+):
+    if from_linter:
+        from_linter.froms[table] = table.fullname
+
+    if asfrom or ashint or within_tstring:
+        effective_schema = self.preparer.schema_for_object(table)
+
+     "
+tier3_017_update,1.0,"This function updates the settings of a console object by allowing certain parameters to be set or left unchanged, and returns a copy of the updated console object.",,"# Source : https://github.com/Textualize/rich/blob/master/rich/console.py (line 163)
+# License: MIT
+# Complexity: 12
+# Tier   : tier3
+
+def update(
+    self,
+    *,
+    width: Union[int, NoChange] = NO_CHANGE,
+    min_width: Union[int, NoChange] = NO_CHANGE,
+    max_width: Union[int, NoChange] = NO_CHANGE,
+    justify: Union[Optional[JustifyMethod], NoChange] = NO_CHANGE,
+    overflow: Union[Optional[OverflowMethod], NoChange] = NO_CHANGE,
+    no_wrap: Union[Optional[bool], NoChange] = NO_CHANGE,
+    highlight: Union[Optional[bool], NoChange] = NO_CHANGE,
+    markup: Union[Optional[bool], NoCha"
+tier3_018__collect_renderables,1.0,"This function collects and combines various types of renderable objects (such as text, emojis, markup, and console output) into a single list of ConsoleRenderable objects that can be rendered together.",,"# Source : https://github.com/Textualize/rich/blob/master/rich/console.py (line 1506)
+# License: MIT
+# Complexity: 12
+# Tier   : tier3
+
+def _collect_renderables(
+    self,
+    objects: Iterable[Any],
+    sep: str,
+    end: str,
+    *,
+    justify: Optional[JustifyMethod] = None,
+    emoji: Optional[bool] = None,
+    markup: Optional[bool] = None,
+    highlight: Optional[bool] = None,
+) -> List[ConsoleRenderable]:
+    """"""Combine a number of renderables and text into one renderable.
+
+    Args:
+        objects (Iterable[Any]): Anything that Rich can render.
+        sep (str): String to write betw"
+tier3_019_get_dependant,1.0,"This function generates a dependency object for a given FastAPI endpoint by analyzing its signature and dependencies, including OAuth scopes and parameter details.",,"# Source : https://github.com/fastapi/fastapi/blob/master/fastapi/dependencies/utils.py (line 254)
+# License: MIT
+# Complexity: 17
+# Tier   : tier3
+
+def get_dependant(
+    *,
+    path: str,
+    call: Callable[..., Any],
+    name: str | None = None,
+    own_oauth_scopes: list[str] | None = None,
+    parent_oauth_scopes: list[str] | None = None,
+    use_cache: bool = True,
+    scope: Literal[""function"", ""request""] | None = None,
+) -> Dependant:
+    dependant = Dependant(
+        call=call,
+        name=name,
+        path=path,
+        use_cache=use_cache,
+        scope=scope,
+        own_oauth_s"
+tier3_020___init__,1.0,"This function initializes a Pydantic field with various attributes and settings, such as default value, alias, validation rules, serialization options, and metadata.",,"# Source : https://github.com/pydantic/pydantic/blob/main/pydantic/fields.py (line 228)
+# License: MIT
+# Complexity: 12
+# Tier   : tier3
+
+def __init__(self, **kwargs: Unpack[_FieldInfoInputs]) -> None:
+    """"""This class should generally not be initialized directly; instead, use the `pydantic.fields.Field` function
+    or one of the constructor classmethods.
+
+    See the signature of `pydantic.fields.Field` for more details about the expected arguments.
+    """"""
+    # Tracking the explicitly set attributes is necessary to correctly merge `Field()` functions
+    # (e.g. with `Annotated[int, Field"
+tier3_021_export_svg,1.0,"This function generates an SVG image from the contents of a console, using the Rich library's styling capabilities to create a visually appealing representation of the terminal output.",,"# Source : https://github.com/Textualize/rich/blob/master/rich/console.py (line 2329)
+# License: MIT
+# Complexity: 19
+# Tier   : tier3
+
+def export_svg(
+    self,
+    *,
+    title: str = ""Rich"",
+    theme: Optional[TerminalTheme] = None,
+    clear: bool = True,
+    code_format: str = CONSOLE_SVG_FORMAT,
+    font_aspect_ratio: float = 0.61,
+    unique_id: Optional[str] = None,
+) -> str:
+    """"""
+    Generate an SVG from the console contents (requires record=True in Console constructor).
+
+    Args:
+        title (str, optional): The title of the tab in the output image
+        theme (TerminalTheme"
+tier3_022_visit_Assert,1.0,"This function rewrites a given Python `assert` statement into a more detailed and informative version that raises an `AssertionError` exception if the assertion fails, providing explanations for the error.",,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/assertion/rewrite.py (line 854)
+# License: MIT
+# Complexity: 15
+# Tier   : tier3
+
+def visit_Assert(self, assert_: ast.Assert) -> list[ast.stmt]:
+    """"""Return the AST statements to replace the ast.Assert instance.
+
+    This rewrites the test of an assertion to provide
+    intermediate values and replace it with an if statement which
+    raises an assertion error with a detailed explanation in case
+    the expression is false.
+    """"""
+    if isinstance(assert_.test, ast.Tuple) and len(assert_.test.elts) >= 1:
+        import w"
+tier3_023__apply_single_annotation,1.0,"This function applies a given metadata object to a Pydantic schema, updating the schema as necessary based on the metadata's attributes and relationships with other schemas.",,"# Source : https://github.com/pydantic/pydantic/blob/main/pydantic/_internal/_generate_schema.py (line 2225)
+# License: MIT
+# Complexity: 18
+# Tier   : tier3
+
+def _apply_single_annotation(
+    self,
+    schema: core_schema.CoreSchema,
+    metadata: Any,
+    check_unsupported_field_info_attributes: bool = True,
+) -> core_schema.CoreSchema:
+    FieldInfo = import_cached_field_info()
+
+    if isinstance(metadata, FieldInfo):
+        if (
+            check_unsupported_field_info_attributes
+            # HACK: we don't want to emit the warning for `FieldInfo` subclasses, because FastAPI does weird m"
+tier3_024__resolve_host,1.0,"This function resolves a host and returns a list of addresses, using caching and throttling to optimize DNS lookups.",,"# Source : https://github.com/aio-libs/aiohttp/blob/master/aiohttp/connector.py (line 1044)
+# License: Apache-2.0
+# Complexity: 17
+# Tier   : tier3
+
+async def _resolve_host(
+    self, host: str, port: int, traces: Sequence[""Trace""] | None = None
+) -> list[ResolveResult]:
+    """"""Resolve host and return list of addresses.""""""
+    if is_ip_address(host):
+        return [
+            {
+                ""hostname"": host,
+                ""host"": host,
+                ""port"": port,
+                ""family"": self._family,
+                ""proto"": 0,
+                ""flags"": 0,
+            }
+        ]
+
+ "
+tier3_025_http_range,1.0,This function parses the Range HTTP header from an aiohttp request and returns a slice object representing the requested portion of the content.,,"# Source : https://github.com/aio-libs/aiohttp/blob/master/aiohttp/web_request.py (line 566)
+# License: Apache-2.0
+# Complexity: 11
+# Tier   : tier3
+
+def http_range(self) -> ""slice[int, int, int]"":
+    """"""The content of Range HTTP header.
+
+    Return a slice instance.
+
+    """"""
+    rng = self._headers.get(hdrs.RANGE)
+    start, end = None, None
+    if rng is not None:
+        try:
+            pattern = r""^bytes=(\d*)-(\d*)$""
+            start, end = re.findall(pattern, rng, re.ASCII)[0]
+        except IndexError:  # pattern was not found in header
+            raise ValueError(""range not in acce"
+tier4_001___init__,1.0,"This function initializes a FastAPI API route, setting various attributes such as the endpoint, response model, status code, and dependencies, which are used to define the behavior of the route.",,"# Source : https://github.com/fastapi/fastapi/blob/master/fastapi/routing.py (line 572)
+# License: MIT
+# Complexity: 23
+# Tier   : tier4
+
+def __init__(
+    self,
+    path: str,
+    endpoint: Callable[..., Any],
+    *,
+    response_model: Any = Default(None),
+    status_code: int | None = None,
+    tags: list[str | Enum] | None = None,
+    dependencies: Sequence[params.Depends] | None = None,
+    summary: str | None = None,
+    description: str | None = None,
+    response_description: str = ""Successful Response"",
+    responses: dict[int | str, dict[str, Any]] | None = None,
+    deprecated: bool"
+tier4_002_render,1.0,"This function renders console markup into a Text instance, allowing for styling and formatting of text with tags, emojis, and other features.",,"# Source : https://github.com/Textualize/rich/blob/master/rich/markup.py (line 106)
+# License: MIT
+# Complexity: 21
+# Tier   : tier4
+
+def render(
+    markup: str,
+    style: Union[str, Style] = """",
+    emoji: bool = True,
+    emoji_variant: Optional[EmojiVariant] = None,
+) -> Text:
+    """"""Render console markup in to a Text instance.
+
+    Args:
+        markup (str): A string containing console markup.
+        style: (Union[str, Style]): The style to use.
+        emoji (bool, optional): Also render emoji code. Defaults to True.
+        emoji_variant (str, optional): Optional emoji variant, eithe"
+tier4_003__request,1.0,This function sends an HTTP request to a specified URL using the aiohttp library and returns a response object.,,"# Source : https://github.com/aio-libs/aiohttp/blob/master/aiohttp/client.py (line 476)
+# License: Apache-2.0
+# Complexity: 95
+# Tier   : tier4
+
+async def _request(
+    self,
+    method: str,
+    str_or_url: StrOrURL,
+    *,
+    params: Query = None,
+    data: Any = None,
+    json: Any = None,
+    cookies: LooseCookies | None = None,
+    headers: LooseHeaders | None = None,
+    skip_auto_headers: Iterable[str] | None = None,
+    auth: BasicAuth | None = None,
+    allow_redirects: bool = True,
+    max_redirects: int = 10,
+    compress: str | bool = False,
+    chunked: bool | None = None,
+    ex"
+tier4_004___init__,1.0,"This function initializes a console object, setting various attributes and options for rendering text in a terminal or other output environment.",,"# Source : https://github.com/Textualize/rich/blob/master/rich/console.py (line 625)
+# License: MIT
+# Complexity: 32
+# Tier   : tier4
+
+def __init__(
+    self,
+    *,
+    color_system: Optional[
+        Literal[""auto"", ""standard"", ""256"", ""truecolor"", ""windows""]
+    ] = ""auto"",
+    force_terminal: Optional[bool] = None,
+    force_jupyter: Optional[bool] = None,
+    force_interactive: Optional[bool] = None,
+    soft_wrap: bool = False,
+    theme: Optional[Theme] = None,
+    stderr: bool = False,
+    file: Optional[IO[str]] = None,
+    quiet: bool = False,
+    width: Optional[int] = None,
+    heig"
+tier4_005_visit_cte,1.0,"This function is part of a SQL compiler and is responsible for handling Common Table Expressions (CTEs) in SQL queries, including checking for duplicate CTEs with the same name, resolving aliases, and generating the final compiled text for the CTE.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 4212)
+# License: MIT
+# Complexity: 45
+# Tier   : tier4
+
+def visit_cte(
+    self,
+    cte: CTE,
+    asfrom: bool = False,
+    ashint: bool = False,
+    fromhints: Optional[_FromHintsType] = None,
+    visiting_cte: Optional[CTE] = None,
+    from_linter: Optional[FromLinter] = None,
+    cte_opts: selectable._CTEOpts = selectable._CTEOpts(False),
+    **kwargs: Any,
+) -> Optional[str]:
+    self_ctes = self._init_cte_state()
+    assert self_ctes is self.ctes
+
+    kwargs[""visiting_cte""] = cte
+
+    cte_n"
+tier4_006_visit_bindparam,1.0,"This function is part of a SQL compiler and is responsible for processing bind parameters, which are placeholders in SQL queries that are replaced with actual values at execution time. It handles various scenarios such as detecting parametrized bindparams in upsert SET clauses, rendering literal bindparam expressions, and handling conflicts between bind parameter names.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 3849)
+# License: MIT
+# Complexity: 37
+# Tier   : tier4
+
+def visit_bindparam(
+    self,
+    bindparam,
+    within_columns_clause=False,
+    literal_binds=False,
+    skip_bind_expression=False,
+    literal_execute=False,
+    render_postcompile=False,
+    is_upsert_set=False,
+    **kwargs,
+):
+    # Detect parametrized bindparams in upsert SET clause for issue #13130
+    if (
+        is_upsert_set
+        and bindparam.value is None
+        and bindparam.callable is None
+        and self._insertmanyv"
+tier4_007_include_router,1.0,"This function includes another `APIRouter` instance into the current one, allowing for nested routing and organization of API endpoints.",,"# Source : https://github.com/fastapi/fastapi/blob/master/fastapi/routing.py (line 1270)
+# License: MIT
+# Complexity: 29
+# Tier   : tier4
+
+def include_router(
+    self,
+    router: Annotated[""APIRouter"", Doc(""The `APIRouter` to include."")],
+    *,
+    prefix: Annotated[str, Doc(""An optional path prefix for the router."")] = """",
+    tags: Annotated[
+        list[str | Enum] | None,
+        Doc(
+            """"""
+            A list of tags to be applied to all the *path operations* in this
+            router.
+
+            It will be added to the generated OpenAPI (e.g. visible at `/docs`).
+
+       "
+tier4_008_run,1.0,This function rewrites assert statements in a given Python module by inserting special imports at the top of the module and transforming the original assert statements to use these new imports.,,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/assertion/rewrite.py (line 692)
+# License: MIT
+# Complexity: 22
+# Tier   : tier4
+
+def run(self, mod: ast.Module) -> None:
+    """"""Find all assert statements in *mod* and rewrite them.""""""
+    if not mod.body:
+        # Nothing to do.
+        return
+
+    # We'll insert some special imports at the top of the module, but after any
+    # docstrings and __future__ imports, so first figure out where that is.
+    doc = getattr(mod, ""docstring"", None)
+    expect_docstring = doc is None
+    if doc is not None and self.is_rewrite_disabl"
+tier4_009_construct_params,1.0,"This function constructs a dictionary of bind parameter keys and values for a SQL query, taking into account various parameters such as escaped names, required values, and callable parameters.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 1905)
+# License: MIT
+# Complexity: 33
+# Tier   : tier4
+
+def construct_params(
+    self,
+    params: Optional[_CoreSingleExecuteParams] = None,
+    extracted_parameters: Optional[Sequence[BindParameter[Any]]] = None,
+    escape_names: bool = True,
+    _group_number: Optional[int] = None,
+    _check: bool = True,
+    _no_postcompile: bool = False,
+    _collected_params: _CoreSingleExecuteParams | None = None,
+) -> _MutableCoreSingleExecuteParams:
+    """"""return a dictionary of bind parameter keys an"
+tier4_010__getini_toml,1.0,"This function validates and processes TOML configuration values with strict type validation, ensuring that the provided value matches the expected type exactly, including list items, without any coercion or conversion.",,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/config/__init__.py (line 1780)
+# License: MIT
+# Complexity: 21
+# Tier   : tier4
+
+def _getini_toml(
+    self,
+    name: str,
+    canonical_name: str,
+    type: str,
+    value: object,
+    default: Any,
+):
+    """"""Handle TOML config values with strict type validation and no coercion.
+
+    In TOML mode, values already have native types from TOML parsing.
+    We validate types match expectations exactly, including list items.
+    """"""
+    value_type = builtins.type(value).__name__
+    if type == ""paths"":
+        # Expect a list of"
+tier4_011__dataclass_schema,1.0,"This function generates a Pydantic dataclass schema, which is a JSON representation of the structure and validation rules for a Python class that conforms to the Pydantic dataclass specification.",,"# Source : https://github.com/pydantic/pydantic/blob/main/pydantic/_internal/_generate_schema.py (line 1808)
+# License: MIT
+# Complexity: 21
+# Tier   : tier4
+
+def _dataclass_schema(
+    self, dataclass: type[StandardDataclass], origin: type[StandardDataclass] | None
+) -> core_schema.CoreSchema:
+    """"""Generate schema for a dataclass.""""""
+    with (
+        self.model_type_stack.push(dataclass),
+        self.defs.get_schema_or_ref(dataclass) as (
+            dataclass_ref,
+            maybe_schema,
+        ),
+    ):
+        if maybe_schema is not None:
+            return maybe_schema
+
+        sc"
+tier4_012_Field,1.0,"This function creates a field for objects that can be configured, allowing users to provide extra information about the field, such as its default value, alias, and validation rules.",,"# Source : https://github.com/pydantic/pydantic/blob/main/pydantic/fields.py (line 1178)
+# License: MIT
+# Complexity: 21
+# Tier   : tier4
+
+def Field(  # noqa: C901
+    default: Any = PydanticUndefined,
+    *,
+    default_factory: Callable[[], Any] | Callable[[dict[str, Any]], Any] | None = _Unset,
+    alias: str | None = _Unset,
+    alias_priority: int | None = _Unset,
+    validation_alias: str | AliasPath | AliasChoices | None = _Unset,
+    serialization_alias: str | None = _Unset,
+    title: str | None = _Unset,
+    field_title_generator: Callable[[str, FieldInfo], str] | None = _Unset,
+    "
+tier4_013___init__,1.0,"This function initializes a new SQLCompiler object, which is used to compile and execute SQL statements, by setting various attributes such as dialect, statement, cache key, column keys, and others.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 1428)
+# License: MIT
+# Complexity: 30
+# Tier   : tier4
+
+def __init__(
+    self,
+    dialect: Dialect,
+    statement: Optional[ClauseElement],
+    cache_key: Optional[CacheKey] = None,
+    column_keys: Optional[Sequence[str]] = None,
+    for_executemany: bool = False,
+    linting: Linting = NO_LINTING,
+    _supporting_against: Optional[SQLCompiler] = None,
+    **kwargs: Any,
+):
+    """"""Construct a new :class:`.SQLCompiler` object.
+
+    :param dialect: :class:`.Dialect` to be used
+
+    :param statem"
+tier4_014_parametrize,1.0,"This function, `parametrize`, is a decorator that allows a test function to be executed multiple times with different sets of arguments, enabling the testing of multiple scenarios or edge cases in a single test.",,"# Source : https://github.com/pytest-dev/pytest/blob/main/src/_pytest/python.py (line 1207)
+# License: MIT
+# Complexity: 24
+# Tier   : tier4
+
+def parametrize(
+    self,
+    argnames: str | Sequence[str],
+    argvalues: Iterable[ParameterSet | Sequence[object] | object],
+    indirect: bool | Sequence[str] = False,
+    ids: Iterable[object | None] | Callable[[Any], object | None] | None = None,
+    scope: _ScopeName | None = None,
+    *,
+    _param_mark: Mark | None = None,
+) -> None:
+    """"""Add new invocations to the underlying test function using the list
+    of argvalues for the given argname"
+tier4_015__exec_single_context,1.0,"This function executes a SQL statement or multiple statements on a database connection, handling various parameters such as input sizes, caching, and event dispatching for different dialects.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/engine/base.py (line 1824)
+# License: MIT
+# Complexity: 28
+# Tier   : tier4
+
+def _exec_single_context(
+    self,
+    dialect: Dialect,
+    context: ExecutionContext,
+    statement: Union[str, Compiled],
+    parameters: Optional[_AnyMultiExecuteParams],
+) -> CursorResult[Unpack[TupleAny]]:
+    """"""continue the _execute_context() method for a single DBAPI
+    cursor.execute() or cursor.executemany() call.
+
+    """"""
+    if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+        generic_setinputsizes = context._prepare_set"
+tier4_016_app,1.0,"This function is the main entry point for a FastAPI application, responsible for handling incoming HTTP requests and returning responses.",,"# Source : https://github.com/fastapi/fastapi/blob/master/fastapi/routing.py (line 341)
+# License: MIT
+# Complexity: 27
+# Tier   : tier4
+
+async def app(request: Request) -> Response:
+    response: Response | None = None
+    file_stack = request.scope.get(""fastapi_middleware_astack"")
+    assert isinstance(file_stack, AsyncExitStack), (
+        ""fastapi_middleware_astack not found in request scope""
+    )
+
+    # Extract endpoint context for error messages
+    endpoint_ctx = (
+        _extract_endpoint_context(dependant.call)
+        if dependant.call
+        else EndpointContext()
+    )
+
+    if d"
+tier4_017_visit_delete,1.0,"This function generates the SQL code for a DELETE statement, including any necessary prefixes, table clause, and additional clauses such as WHERE or RETURNING statements.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 6710)
+# License: MIT
+# Complexity: 29
+# Tier   : tier4
+
+def visit_delete(self, delete_stmt, visiting_cte=None, **kw):
+    compile_state = delete_stmt._compile_state_factory(
+        delete_stmt, self, **kw
+    )
+    delete_stmt = compile_state.statement
+
+    if visiting_cte is not None:
+        kw[""visiting_cte""] = visiting_cte
+        toplevel = False
+    else:
+        toplevel = not self.stack
+
+    if toplevel:
+        self.isdelete = True
+        if not self.dml_compile_state:
+            self"
+tier4_018_visit_select,1.0,"This function generates the SQL code for a SELECT statement by parsing and processing the given SELECT object, including translating it to meet specific database requirements (e.g., LIMIT/OFFSET), handling compound queries with CTEs, and assembling the final SQL string.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 4949)
+# License: MIT
+# Complexity: 42
+# Tier   : tier4
+
+def visit_select(
+    self,
+    select_stmt,
+    asfrom=False,
+    insert_into=False,
+    fromhints=None,
+    compound_index=None,
+    select_wraps_for=None,
+    lateral=False,
+    from_linter=None,
+    **kwargs,
+):
+    assert select_wraps_for is None, (
+        ""SQLAlchemy 1.4 requires use of ""
+        ""the translate_select_structure hook for structural ""
+        ""translations of SELECT objects""
+    )
+    if self._collect_params:
+        se"
+tier4_019__typed_dict_schema,1.0,"This function generates a core schema for a TypedDict class in Pydantic, which is used to validate and serialize data types that are defined using the `typing.TypedDict` syntax.",,"# Source : https://github.com/pydantic/pydantic/blob/main/pydantic/_internal/_generate_schema.py (line 1369)
+# License: MIT
+# Complexity: 27
+# Tier   : tier4
+
+def _typed_dict_schema(self, typed_dict_cls: Any, origin: Any) -> core_schema.CoreSchema:
+    """"""Generate a core schema for a `TypedDict` class.
+
+    To be able to build a `DecoratorInfos` instance for the `TypedDict` class (which will include
+    validators, serializers, etc.), we need to have access to the original bases of the class
+    (see https://docs.python.org/3/library/types.html#types.get_original_bases).
+    However, the `__or"
+tier4_020__match_generic_type,1.0,"This function attempts to determine the schema for a given object `obj` of type `origin`, by recursively checking various types and returning the corresponding schema, or an unknown schema if none match.",,"# Source : https://github.com/pydantic/pydantic/blob/main/pydantic/_internal/_generate_schema.py (line 1142)
+# License: MIT
+# Complexity: 21
+# Tier   : tier4
+
+def _match_generic_type(self, obj: Any, origin: Any) -> CoreSchema:  # noqa: C901
+    # Need to handle generic dataclasses before looking for the schema properties because attribute accesses
+    # on _GenericAlias delegate to the origin type, so lose the information about the concrete parametrization
+    # As a result, currently, there is no way to cache the schema for generic dataclasses. This may be possible
+    # to resolve by modifyi"
+tier4_021_get,1.0,"This function handles HTTP GET requests by retrieving the requested file or resource from a server, optionally returning only a portion of it (e.g., for partial content), and setting various headers to provide metadata about the response.",,"# Source : https://github.com/tornadoweb/tornado/blob/master/tornado/web.py (line 2769)
+# License: Apache-2.0
+# Complexity: 27
+# Tier   : tier4
+
+async def get(self, path: str, include_body: bool = True) -> None:
+    # Set up our path instance variables.
+    self.path = self.parse_url_path(path)
+    del path  # make sure we don't refer to path instead of self.path again
+    absolute_path = self.get_absolute_path(self.root, self.path)
+    self.absolute_path = self.validate_absolute_path(self.root, absolute_path)
+    if self.absolute_path is None:
+        return
+
+    self.modified = self.get_modi"
+tier4_022__process_parameters_for_postcompile,1.0,"This function processes special post-compile parameters in a SQL statement, handling expanding parameters, literal binds, and other edge cases to generate an expanded state for the statement.",,"# Source : https://github.com/sqlalchemy/sqlalchemy/blob/main/lib/sqlalchemy/sql/compiler.py (line 2096)
+# License: MIT
+# Complexity: 34
+# Tier   : tier4
+
+def _process_parameters_for_postcompile(
+    self,
+    parameters: _MutableCoreSingleExecuteParams,
+    _populate_self: bool = False,
+) -> ExpandedState:
+    """"""handle special post compile parameters.
+
+    These include:
+
+    * ""expanding"" parameters -typically IN tuples that are rendered
+      on a per-parameter basis for an otherwise fixed SQL statement string.
+
+    * literal_binds compiled with the literal_execute flag.  Used for
+      th"
+tier4_023_jsonable_encoder,1.0,"This function, `jsonable_encoder`, converts any object to a format that can be encoded in JSON, allowing it to be safely sent over the network or stored in a database.",,"# Source : https://github.com/fastapi/fastapi/blob/master/fastapi/encoders.py (line 112)
+# License: MIT
+# Complexity: 35
+# Tier   : tier4
+
+def jsonable_encoder(
+    obj: Annotated[
+        Any,
+        Doc(
+            """"""
+            The input object to convert to JSON.
+            """"""
+        ),
+    ],
+    include: Annotated[
+        IncEx | None,
+        Doc(
+            """"""
+            Pydantic's `include` parameter, passed to Pydantic models to set the
+            fields to include.
+            """"""
+        ),
+    ] = None,
+    exclude: Annotated[
+        IncEx | None,
+        Doc(
+       "
+tier4_024_solve_dependencies,1.0,"This function, `solve_dependencies`, is a recursive asynchronous function that resolves dependencies in an application by calling sub-dependencies and handling their results, caching, and other parameters to ultimately return a solved dependency with its values, errors, background tasks, response, and cache.",,"# Source : https://github.com/fastapi/fastapi/blob/master/fastapi/dependencies/utils.py (line 565)
+# License: MIT
+# Complexity: 27
+# Tier   : tier4
+
+async def solve_dependencies(
+    *,
+    request: Request | WebSocket,
+    dependant: Dependant,
+    body: dict[str, Any] | FormData | None = None,
+    background_tasks: StarletteBackgroundTasks | None = None,
+    response: Response | None = None,
+    dependency_overrides_provider: Any | None = None,
+    dependency_cache: dict[DependencyCacheKey, Any] | None = None,
+    # TODO: remove this parameter later, no longer used, not removing it yet as so"
+tier4_025__start_tls_connection,1.0,This function establishes a secure connection to a remote server using Transport Layer Security (TLS) by wrapping an existing TCP transport with a new TLS protocol.,,"# Source : https://github.com/aio-libs/aiohttp/blob/master/aiohttp/connector.py (line 1312)
+# License: Apache-2.0
+# Complexity: 22
+# Tier   : tier4
+
+async def _start_tls_connection(
+    self,
+    underlying_transport: asyncio.Transport,
+    req: ClientRequest,
+    timeout: ""ClientTimeout"",
+    client_error: type[Exception] = ClientConnectorError,
+) -> tuple[asyncio.BaseTransport, ResponseHandler]:
+    """"""Wrap the raw TCP transport with TLS.""""""
+    tls_proto = self._factory()  # Create a brand new proto for TLS
+    sslcontext = self._get_ssl_context(req)
+    if TYPE_CHECKING:
+        # _start_t"
