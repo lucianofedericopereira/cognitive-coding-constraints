@@ -43,7 +43,7 @@ def fig1_token_distributions(df: pd.DataFrame) -> None:
     for ax, tok in zip(axes, tokenizers):
         sub = df[df["tokenizer"] == tok]
         data = [sub[f"{n}_tokens"].values for n in NOTATION_COLS]
-        bp = ax.boxplot(data, labels=NOTATION_COLS, patch_artist=True, notch=False)
+        bp = ax.boxplot(data, tick_labels=NOTATION_COLS, patch_artist=True, notch=False)
         for patch, notation in zip(bp["boxes"], NOTATION_COLS):
             patch.set_facecolor(PALETTE[notation])
             patch.set_alpha(0.7)

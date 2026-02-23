@@ -110,17 +110,18 @@ def run(
     result["tokens_per_call"] = tokens_per_call
     result["cost_per_1k_usd"] = cost_per_1k
 
+    ci = int(CI_LEVEL * 100)
     log.info(
         "\n=== Cost Projection (tokenizer=%s) ===\n"
-        "  Mean dot/camelCase ratio : %.4f (±%.4f)\n"
-        "  Annual cost delta        : $%,.2f\n"
-        "  %d%% CI                   : [$%,.2f, $%,.2f]",
+        "  Mean dot/camelCase ratio : %.4f (+/-%.4f)\n"
+        "  Annual cost delta        : $%s\n"
+        "  %d%% CI                   : [$%s, $%s]",
         tokenizer,
         result["mean_ratio"], result["std_ratio"],
-        result["point_estimate_usd"],
-        int(CI_LEVEL * 100),
-        result[f"ci_{int(CI_LEVEL*100)}_lo_usd"],
-        result[f"ci_{int(CI_LEVEL*100)}_hi_usd"],
+        f"{result['point_estimate_usd']:,.2f}",
+        ci,
+        f"{result[f'ci_{ci}_lo_usd']:,.2f}",
+        f"{result[f'ci_{ci}_hi_usd']:,.2f}",
     )
     return result
 

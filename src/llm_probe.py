@@ -4,11 +4,18 @@ llm_probe.py — Experiment 2: LLM API calls and response collection.
 Submits each function in data/code_functions/ to an LLM 5 times
 using the comprehension prompt defined in §3.2.2 of the paper.
 
-Supported backends: openai (default), anthropic.
-Set OPENAI_API_KEY or ANTHROPIC_API_KEY in the environment (or .env).
+Supported backends:
+  ollama    — local inference via Ollama (no API key, default)
+  openai    — OpenAI API (requires OPENAI_API_KEY)
+  anthropic — Anthropic API (requires ANTHROPIC_API_KEY)
 
-All responses are cached in data/cache/ to enable re-running analysis
-without re-incurring API costs (see utils.cache_get / cache_set).
+Ollama usage:
+  1. Install: curl -fsSL https://ollama.com/install.sh | sh
+  2. Pull model: ollama pull llama3.2
+  3. Run: python llm_probe.py --backend ollama --model llama3.2
+
+All responses are cached in data/cache/ to allow re-running analysis
+without re-incurring cost (see utils.cache_get / cache_set).
 """
 
 import os
@@ -78,7 +85,39 @@ def _call_anthropic(prompt: str, model: str = "claude-3-5-sonnet-20241022") -> d
     }
 
 
+def _call_ollama(prompt: str, model: str = "llama3.2") -> dict:
+    """
+    Call a locally running Ollama instance via its REST API.
+    Ollama must be running: `ollama serve` (starts automatically on most installs).
+    Model must be pulled first: `ollama pull llama3.2`
+
+    Token counts are approximated from character length since Ollama's
+    /api/generate endpoint does not expose tokenizer counts directly.
+    The /api/chat endpoint with stream=False returns eval_count (output tokens)
+    and prompt_eval_count (input tokens).
+    """
+    import requests as req
+    url = "http://localhost:11434/api/chat"
+    payload = {
+        "model": model,
+        "messages": [{"role": "user", "content": prompt}],
+        "stream": False,
+        "options": {"temperature": 0, "num_predict": 150},
+    }
+    resp = req.post(url, json=payload, timeout=120)
+    resp.raise_for_status()
+    data = resp.json()
+    msg = data["message"]["content"].strip()
+    return {
+        "response_text": msg,
+        "input_tokens": data.get("prompt_eval_count", -1),
+        "output_tokens": data.get("eval_count", -1),
+        "model": model,
+    }
+
+
 BACKENDS = {
+    "ollama": _call_ollama,
     "openai": _call_openai,
     "anthropic": _call_anthropic,
 }
@@ -115,7 +154,7 @@ def _call_with_backoff(prompt: str, backend: str, model: str) -> dict:
 # Main probe
 # ---------------------------------------------------------------------------
 
-def run(backend: str = "openai", model: str = "gpt-4o") -> None:
+def run(backend: str = "ollama", model: str = "llama3.2") -> None:
     files = sorted(CODE_FUNCTIONS_DIR.glob("*.py"))
     if not files:
         log.error("No .py files found in %s — run corpus collection first.", CODE_FUNCTIONS_DIR)
@@ -127,12 +166,25 @@ def run(backend: str = "openai", model: str = "gpt-4o") -> None:
     min_interval = 60.0 / MAX_RPM
 
     RAW_RESPONSES_CSV.parent.mkdir(parents=True, exist_ok=True)
-    with open(RAW_RESPONSES_CSV, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=[
-            "function_id", "attempt", "response_text",
-            "input_tokens", "output_tokens", "latency_ms", "model",
-        ])
-        writer.writeheader()
+
+    # Resume support: load already-completed (function_id, attempt) pairs
+    completed: set[tuple[str, int]] = set()
+    write_header = True
+    if RAW_RESPONSES_CSV.exists() and RAW_RESPONSES_CSV.stat().st_size > 50:
+        import pandas as pd
+        existing = pd.read_csv(RAW_RESPONSES_CSV)
+        completed = set(zip(existing["function_id"], existing["attempt"].astype(int)))
+        write_header = False
+        log.info("Resuming — %d / %d calls already cached in CSV.", len(completed), len(files) * N_ATTEMPTS)
+
+    FIELDNAMES = ["function_id", "attempt", "response_text",
+                  "input_tokens", "output_tokens", "latency_ms", "model"]
+
+    mode = "a" if not write_header else "w"
+    with open(RAW_RESPONSES_CSV, mode, newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=FIELDNAMES)
+        if write_header:
+            writer.writeheader()
 
         for path in files:
             function_id = path.stem
@@ -140,6 +192,9 @@ def run(backend: str = "openai", model: str = "gpt-4o") -> None:
             prompt = PROMPT_TEMPLATE.format(function_code=code)
 
             for attempt in range(1, N_ATTEMPTS + 1):
+                if (function_id, attempt) in completed:
+                    continue
+
                 t_start = time.monotonic()
                 result = _call_with_backoff(prompt, backend, model)
                 writer.writerow({
@@ -163,7 +218,7 @@ def run(backend: str = "openai", model: str = "gpt-4o") -> None:
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="LLM comprehension probe (Experiment 2)")
-    parser.add_argument("--backend", choices=list(BACKENDS), default="openai")
-    parser.add_argument("--model", default="gpt-4o")
+    parser.add_argument("--backend", choices=list(BACKENDS), default="ollama")
+    parser.add_argument("--model", default="llama3.2")
     args = parser.parse_args()
     run(backend=args.backend, model=args.model)

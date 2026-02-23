@@ -35,10 +35,12 @@ exp1: corpus
 # Experiment 2 — code metrics + LLM probe + scoring + change-point
 # ---------------------------------------------------------------------------
 exp2:
+	@echo "==> Collecting function corpus …"
+	$(PYTHON) $(SRCDIR)/function_collector.py
 	@echo "==> Computing code metrics …"
 	$(PYTHON) $(SRCDIR)/code_metrics.py
-	@echo "==> Probing LLM (requires OPENAI_API_KEY or ANTHROPIC_API_KEY) …"
-	$(PYTHON) $(SRCDIR)/llm_probe.py
+	@echo "==> Probing LLM via Ollama (ollama must be running, model must be pulled) …"
+	$(PYTHON) $(SRCDIR)/llm_probe.py --backend ollama --model llama3.2
 	@echo "==> Scoring comprehension …"
 	$(PYTHON) $(SRCDIR)/comprehension_scorer.py
 	@echo "==> Running change-point analysis …"
