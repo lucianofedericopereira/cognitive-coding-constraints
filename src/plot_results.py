@@ -269,6 +269,84 @@ def fig5_correlation_heatmap(corr_df: pd.DataFrame) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Figure 6 — Diminishing-returns production function curve (linear space)
+# ---------------------------------------------------------------------------
+
+def fig6_production_curve() -> None:
+    """
+    Illustrate the estimated production function in LINEAR space so the
+    curvature is immediately visible: Q = exp(alpha) * K^beta.
+
+    alpha = 2.843, beta = 0.102  (from Experiment 2 OLS fit)
+
+    Also plots:
+      - Constant-returns reference (beta = 1)
+      - Marginal product curve (dQ/dK), showing how rapidly it falls
+      - CDCC threshold vertical band
+    """
+    alpha = 2.843
+    beta_hat = 0.102
+
+    K = np.linspace(50, 2000, 500)          # input tokens (realistic range)
+    Q_fit = np.exp(alpha) * K ** beta_hat   # estimated production function
+    Q_cr  = np.exp(alpha) * K ** 1.0        # constant-returns reference (scaled)
+
+    # Normalise constant-returns to start at the same point as the fit
+    Q_cr_normed = Q_cr * (Q_fit[0] / Q_cr[0])
+
+    # Marginal product: dQ/dK = alpha_A * beta * K^(beta-1)
+    A = np.exp(alpha)
+    MP = A * beta_hat * K ** (beta_hat - 1)
+
+    with plt.style.context(STYLE):
+        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 7),
+                                        gridspec_kw={"height_ratios": [2, 1]},
+                                        sharex=True)
+
+        # ---- Top panel: production function levels ----
+        ax1.plot(K, Q_fit, color="#2c3e50", linewidth=2.5,
+                 label=fr"$Q = e^{{{alpha}}}\cdot K^{{{beta_hat}}}$ (fitted, $\beta={beta_hat}$)")
+        ax1.plot(K, Q_cr_normed, color="#95a5a6", linewidth=1.5, linestyle="--",
+                 label=r"Constant returns ($\beta = 1$, rescaled)")
+
+        # CDCC threshold band
+        ax1.axvspan(0, 384, alpha=0.08, color=COMPLY_COLOR,
+                    label=r"CDCC-compliant region ($K \leq 384$ tokens)")
+        ax1.axvspan(384, 2000, alpha=0.05, color=VIOLATE_COLOR,
+                    label="CDCC-violating region")
+        ax1.axvline(384, color=CDCC_COLOR, linewidth=1.2, linestyle=":",
+                    label="CDCC boundary (mean, complexity = 10)")
+
+        ax1.set_ylabel("Output tokens (Q)", fontsize=10)
+        ax1.set_title(
+            f"Production Function: LLM Output vs. Input Complexity\n"
+            r"$Q = e^{\alpha}\cdot K^{\beta}$"
+            f",  α={alpha}, β={beta_hat}",
+            fontsize=10
+        )
+        ax1.legend(fontsize=8, loc="upper left")
+
+        # ---- Bottom panel: marginal product ----
+        ax2.plot(K, MP, color="#e74c3c", linewidth=2,
+                 label=r"Marginal product $\frac{dQ}{dK} = A\beta K^{\beta-1}$")
+        ax2.axhline(0, color="black", linewidth=0.5)
+        ax2.axvline(384, color=CDCC_COLOR, linewidth=1.2, linestyle=":")
+        ax2.axvspan(0, 384, alpha=0.08, color=COMPLY_COLOR)
+        ax2.axvspan(384, 2000, alpha=0.05, color=VIOLATE_COLOR)
+
+        ax2.set_xlabel("Input tokens (K = code complexity proxy)", fontsize=10)
+        ax2.set_ylabel("Marginal output\nper input token", fontsize=9)
+        ax2.legend(fontsize=8)
+        ax2.set_ylim(bottom=0)
+
+        plt.tight_layout()
+        out = PLOTS_DIR / "fig6_diminishing_returns_curve.pdf"
+        plt.savefig(out, bbox_inches="tight")
+        plt.close()
+        log.info("Saved %s", out)
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -295,6 +373,9 @@ def run() -> None:
         fig4_loglog_production_function(exp2, metrics_df)
     else:
         log.warning("Exp2 results or metrics not available — skipping fig3, fig4.")
+
+    # fig6 is always generated from the fitted parameters (no data file needed)
+    fig6_production_curve()
 
     if exp3 is not None:
         fig5_correlation_heatmap(exp3)

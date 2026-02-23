@@ -7,7 +7,7 @@ SRCDIR  := src
 RESULTS := results
 PLOTS   := results/plots
 
-.PHONY: all corpus exp1 exp2 exp3 plots paper paper-html clean help
+.PHONY: all corpus exp1 exp2 exp3 plots paper paper-html paper-tex clean help
 
 # ---------------------------------------------------------------------------
 # Default
@@ -92,6 +92,18 @@ paper-html:
 	@echo "Paper written to paper/empirical_cdcc_paper.html"
 
 # ---------------------------------------------------------------------------
+# Native LaTeX paper (xelatex + bibtex)
+# ---------------------------------------------------------------------------
+paper-tex:
+	@echo "==> Rendering paper (xelatex + bibtex) …"
+	cd paper && \
+	    xelatex empirical_cdcc_paper.tex && \
+	    bibtex  empirical_cdcc_paper     && \
+	    xelatex empirical_cdcc_paper.tex && \
+	    xelatex empirical_cdcc_paper.tex
+	@echo "Paper written to paper/empirical_cdcc_paper.pdf"
+
+# ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------
 test:
@@ -110,6 +122,9 @@ clean:
 	rm -f $(RESULTS)/exp3_rank_correlations.csv
 	rm -rf $(PLOTS)
 	rm -rf paper/figures paper/empirical_cdcc_paper.pdf paper/empirical_cdcc_paper.html
+	rm -f paper/empirical_cdcc_paper.aux paper/empirical_cdcc_paper.bbl \
+	      paper/empirical_cdcc_paper.blg paper/empirical_cdcc_paper.log \
+	      paper/empirical_cdcc_paper.out paper/empirical_cdcc_paper.toc
 	find . -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
 
 help:
@@ -120,6 +135,7 @@ help:
 	@echo "  exp3    — cross-model rank correlations"
 	@echo "  plots   — generate all paper figures"
 	@echo "  paper      — render PDF via pandoc + xelatex (texlive-xetex)"
+	@echo "  paper-tex  — render PDF directly from empirical_cdcc_paper.tex (xelatex + bibtex)"
 	@echo "  paper-html — render HTML via pandoc (no LaTeX needed)"
 	@echo "  test    — run unit tests"
 	@echo "  clean   — remove generated files (preserves API cache)"

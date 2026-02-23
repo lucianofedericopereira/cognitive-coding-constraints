@@ -1,0 +1,67 @@
+\begin{thebibliography}{10}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Cowan(2001)]{cowan2001}
+Nelson Cowan.
+\newblock The magical number 4 in short-term memory: A reconsideration of
+  mental storage capacity.
+\newblock \emph{Behavioral and Brain Sciences}, 24\penalty0 (1):\penalty0
+  87--114, 2001.
+
+\bibitem[Kahneman(2011)]{kahneman2011}
+Daniel Kahneman.
+\newblock \emph{Thinking, Fast and Slow}.
+\newblock Farrar, Straus and Giroux, 2011.
+
+\bibitem[Miller(1956)]{miller1956}
+George~A. Miller.
+\newblock The magical number seven, plus or minus two: Some limits on our
+  capacity for processing information.
+\newblock \emph{Psychological Review}, 63\penalty0 (2):\penalty0 81--97, 1956.
+
+\bibitem[Pereira(2026{\natexlab{a}})]{pereira2026a}
+Luciano~Federico Pereira.
+\newblock Confirmation bias in post-{LLM} software architecture: Are we
+  optimizing for the wrong reader?
+\newblock Zenodo, 2026{\natexlab{a}}.
+
+\bibitem[Pereira(2026{\natexlab{b}})]{pereira2026b}
+Luciano~Federico Pereira.
+\newblock Cognitive-derived constraints for {AI}-assisted software engineering
+  ({CDCC}): A framework for human--machine co-design.
+\newblock Zenodo, 2026{\natexlab{b}}.
+
+\bibitem[Sennrich et~al.(2016)Sennrich, Haddow, and Birch]{sennrich2016}
+Rico Sennrich, Barry Haddow, and Alexandra Birch.
+\newblock Neural machine translation of rare words with subword units.
+\newblock In \emph{Proceedings of the 54th Annual Meeting of the Association
+  for Computational Linguistics}, pages 1715--1725, 2016.
+
+\bibitem[Simon(1955)]{simon1955}
+Herbert~A. Simon.
+\newblock A behavioral model of rational choice.
+\newblock \emph{Quarterly Journal of Economics}, 69\penalty0 (1):\penalty0
+  99--118, 1955.
+
+\bibitem[Sweller(1988)]{sweller1988}
+John Sweller.
+\newblock Cognitive load during problem solving: Effects on learning.
+\newblock \emph{Cognitive Science}, 12\penalty0 (2):\penalty0 257--285, 1988.
+
+\bibitem[Varian(1992)]{varian1992}
+Hal~R. Varian.
+\newblock \emph{Microeconomic Analysis}.
+\newblock W.W. Norton \& Company, 3rd edition, 1992.
+
+\bibitem[Watson and McCabe(1996)]{watson1996}
+Arthur~H. Watson and Thomas~J. McCabe.
+\newblock Structured testing: A testing methodology using the cyclomatic
+  complexity metric.
+\newblock Technical Report NIST Special Publication 500-235, National Institute
+  of Standards and Technology, 1996.
+
+\end{thebibliography}
