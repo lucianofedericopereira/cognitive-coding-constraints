@@ -119,10 +119,9 @@ def run() -> pd.DataFrame:
     # --- SAS (if annotations exist) ---
     rater_a_path = ANNOTATIONS_DIR / "rater_a.csv"
     rater_b_path = ANNOTATIONS_DIR / "rater_b.csv"
-    if (
-        rater_a_path.stat().st_size > 30
-        and rater_b_path.stat().st_size > 30
-    ):
+    rater_a_has_data = rater_a_path.stat().st_size > 30 and len(pd.read_csv(rater_a_path)) > 0
+    rater_b_has_data = rater_b_path.stat().st_size > 30 and len(pd.read_csv(rater_b_path)) > 0
+    if rater_a_has_data and rater_b_has_data:
         rater_a, rater_b = load_annotations()
         sas_df = reconcile_sas(rater_a, rater_b)
         sas_agg = sas_df.groupby("function_id")["sas_reconciled"].mean().reset_index()

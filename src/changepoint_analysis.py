@@ -120,6 +120,9 @@ def run() -> dict:
             continue
 
         sub = merged[["complexity", outcome]].dropna()
+        if len(sub) < 6:
+            log.warning("Not enough data for '%s' (%d rows) — skipping.", outcome, len(sub))
+            continue
         x = sub["complexity"].values.astype(float)
         y = sub[outcome].values.astype(float)
 
